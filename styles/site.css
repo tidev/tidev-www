@@ -1,3 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.prose {
+    text-align: left !important;
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+.prose h1 {
+    text-align: center;
+}
+
+.prose p {
+    text-align: justify;
+}
