@@ -1,5 +1,5 @@
 ---
-title: 'Titanium Community Code of Conduct'
+title: 'Code of Conduct'
 ---
 
 The Titanium community, lead by the board of directors at TiDev, Inc, is dedicated to providing a safe, inclusive, welcoming and harassment-free space and experience for all community participants to learn and grow together.

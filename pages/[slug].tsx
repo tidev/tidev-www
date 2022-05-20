@@ -1,70 +1,38 @@
 import DefaultErrorPage from 'next/error';
-import fs from 'fs';
-import globby from 'globby';
 import Head from 'next/head';
-import matter from 'gray-matter';
-import md from 'markdown-it';
-import path from 'path';
+import { findContent, IParams, loadContent } from '../utils/api';
+import { GetStaticProps, InferGetStaticPropsType } from 'next';
 
-export default function Page({ page }) {
+export default function Page({ page }: InferGetStaticPropsType<typeof getStaticProps>) {
 	if (!page) {
 		return <DefaultErrorPage statusCode={404} />;
 	}
 
 	const { content, data } = page;
-	const html = md({
-		html: true,
-		linkify: true
-	}).render(content);
 
 	return (
-		<div className='prose mx-auto'>
+		<div className='mx-auto prose'>
 			<Head>
 				<title>{data.title} - TiDev</title>
 			</Head>
 			<h1>{data.title}</h1>
-			<div dangerouslySetInnerHTML={{ __html: html }} />
+			<div dangerouslySetInnerHTML={{ __html: content }} />
 		</div>
 	);
 }
 
-export async function getStaticProps({ params }) {
-	const files = await globby([
-		'./pages/**/*.md'
-	]);
-
-	for (const file of files) {
-		const { name: slug } = path.parse(file);
-		if (slug === params.slug) {
-			const { content, data } = matter(fs.readFileSync(file, 'utf-8'));
-			return {
-				props: {
-					page: {
-						content,
-						data
-					}
-				}
-			}
-		}
-	}
-
+export async function getStaticPaths() {
 	return {
-		props: {}
-	};
+        paths: (await findContent('pages')).map(page => ({ params: page })),
+        fallback: false,
+    };
 }
 
-export async function getStaticPaths() {
-	const files = await globby([
-		'./pages/**/*.md'
-	]);
-
-	const paths = files.map((file: string) => {
-		const { name: slug } = path.parse(file);
-		return { params: { slug } };
-	});
-
-	return {
-		paths,
-		fallback: false
+export const getStaticProps: GetStaticProps = async context => {
+    const { slug } = context.params as IParams;
+    return {
+		props: {
+			page: await loadContent('pages', slug)
+		}
 	};
 }

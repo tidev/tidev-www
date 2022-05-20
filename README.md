@@ -8,20 +8,22 @@ Home page
    * homepage https://titaniumsdk.com
    * about
 
+ - People using Titanium
+
  - Header
    * primary nav
      - Blog
-	 - Donate
-	 - Contribute
-   * social links
+	   - Donate
+	   - Contribute
+   * Social links
      - TiDev twitter
-	 - TiDev github
-	 - Slack https://fontawesome.com/icons/slack?s=brands
+	   - TiDev github
+	   - Slack
 
  - Footer
-   * Copyright
    * Legal
    * Code of conduct
+   * Copyright
    * Street address
 
 ## Dev

@@ -7,7 +7,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 	return (
 		<Layout>
 			<Head>
-				<title>TiDev - </title>
+				<title>TiDev</title>
 				<meta name="description" content="TiDev is a nonprofit organization dedicated to continuing the development of the open source Titanium SDK." />
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
