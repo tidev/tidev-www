@@ -7,11 +7,9 @@ import Companies from '../components/home/companies';
 
 export default function Home() {
     return (
-        <section>
+        <section className='w-full'>
             <Hero />
             <About />
-            <Team />
-            <Companies />
         </section>
     );
 }
