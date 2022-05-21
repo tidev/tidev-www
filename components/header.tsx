@@ -13,13 +13,13 @@ export default function Header() {
                     </Link>
                     <nav className='flex flex-wrap items-center mb-5 text-base md:mb-0 md:pl-8 md:ml-8 md:border-l md:border-gray-200'>
                         <Link href='/blog'>
-                            <a className='mr-5 font-medium leading-6 text-gray-600 hover:text-gray-900'>Blog</a>
+                            <a className='mr-5 font-medium leading-6 text-gray-600 hover:text-blue-500'>Blog</a>
                         </Link>
                         <Link href='/donate'>
-                            <a className='mr-5 font-medium leading-6 text-gray-600 hover:text-gray-900'>Donate</a>
+                            <a className='mr-5 font-medium leading-6 text-gray-600 hover:text-blue-500'>Donate</a>
                         </Link>
                         <Link href='/contribute'>
-                            <a className='mr-5 font-medium leading-6 text-gray-600 hover:text-gray-900'>Contribute</a>
+                            <a className='mr-5 font-medium leading-6 text-gray-600 hover:text-blue-500'>Contribute</a>
                         </Link>
                     </nav>
                 </div>
