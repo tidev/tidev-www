@@ -26,7 +26,7 @@ export default function About() {
                         </svg>
                         <h5 className='ml-3 font-semibold text-gray-900'>To create a trusted channel for getting support around the platform</h5>
                     </div>
-                    <p>This means marketing the free support provided via Slack and StackOverflow, as well as creating a paid enterprise support channel enabling large corporations to purchase dedicated support for the SDK from our core engineers.</p>
+                    <p>This means marketing the free support provided via [Slack](https://slack.tidev.io) and [StackOverflow](https://stackoverflow.com/questions/tagged/titanium), as well as creating a paid enterprise support channel enabling large corporations to purchase dedicated support for the SDK from our core engineers.</p>
                 </div>
                 <div>
                     <div className='flex items-center pr-2 mb-3'>
