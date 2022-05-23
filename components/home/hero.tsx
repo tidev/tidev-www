@@ -7,7 +7,7 @@ export default function Hero() {
         <>
             <div className='py-12 text-center px-10'>
                 <div className='text-sm text-blue-500 uppercase font-bold tracking-wider mb-2'>Write in JavaScript. Run native everywhere.</div>
-                <h2 className='text-4xl md:text-4xl font-black mb-5'>We are the Titanium SDK</h2>
+                <h2 className='text-4xl md:text-4xl font-black mb-5'>We are Titanium</h2>
                 <h3 className='text-lg md:text-xl md:leading-relaxed text-gray-700 lg:w-2/3 mx-auto'>The Titanium SDK helps you to build native cross-platform mobile application using JavaScript and the Titanium API, which abstracts the native APIs of the mobile platforms. Titanium empowers you to create immersive, full-featured applications, featuring over 80% code reuse across mobile apps.</h3>
                 <div className='flex justify-center'>
                     <Link href='https://titaniumsdk.com' passHref>
