@@ -14,10 +14,6 @@ For a more detailed overview, known issues and closed tickets, see the release n
 
 There is also a new version of the [Titanium CLI](https://github.com/tidev/titanium) (6.0.2) and [Alloy](https://github.com/tidev/alloy) (2.0.1).
 
-## Important notice
-
-**Please update your Node.js version to >=16**
-
 ## Install
 
 **Follow these steps to get SDK 11.0.0.RC:**
