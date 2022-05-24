@@ -11,3 +11,34 @@
 .prose h1 {
     text-align: center;
 }
+
+@media (prefers-color-scheme: dark) {
+    html,
+    body {
+        background-color: #262626 !important;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p,
+    ul,
+    ol,
+    li,
+    a,
+    strong,
+    code {
+        color: #d1d5db !important;
+    }
+
+    a {
+        text-decoration: underline;
+    }
+
+    .logo {
+        content: url('/tidev-logo-dark.png');
+    }
+}
