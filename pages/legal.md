@@ -12,10 +12,8 @@ Centreville, AL 35042_
 
 **Software Licenses**
 
--   All TiDev source code is open-source and released under V2.0 of the Apache License:
-    -   [https://www.apache.org/licenses/LICENSE-2.0](https://www.apache.org/licenses/LICENSE-2.0)
--   All TiDev docs are licensed under the MIT license.
-    -   [https://en.wikipedia.org/wiki/MIT_License](https://en.wikipedia.org/wiki/MIT_License)
+-   All TiDev source code is open-source and released under V2.0 of the [Apache License](https://www.apache.org/licenses/LICENSE-2.0).
+-   All TiDev docs are licensed under the [MIT license](https://en.wikipedia.org/wiki/MIT_License).
 
 **How We Handle Volunteer Contributions**
 
@@ -24,8 +22,7 @@ Before accepting any software or docs contributions from TiDev staff or worldwid
 Our CLA can be found here:
 https://github.com/tidev/organization-docs/blob/main/CONTRIBUTOR_CLA.pdf
 
-Our process for getting a CLA on file can be found here:
-https://github.com/tidev/organization-docs/blob/main/AUTHORIZED_CONTRIBUTORS.md
+Our process for getting a CLA on file can be found here: [CLA process](https://github.com/tidev/organization-docs/blob/main/AUTHORIZED_CONTRIBUTORS.md)
 
 **Open Source Attributions**
 

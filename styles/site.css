@@ -28,13 +28,14 @@
     ul,
     ol,
     li,
-    a,
+    li a,
+    p a,
     strong,
     code {
-        color: #d1d5db !important;
+        color: #eee !important;
     }
 
-    a {
+    p a {
         text-decoration: underline;
     }
 
