@@ -10,7 +10,7 @@ export default function About() {
                 </div>
             </div>
 
-            <div className='grid grid-cols-1 gap-0 text-gray-600 md:grid-cols-2 md:gap-16 px-10'>
+            <div className='grid grid-cols-1 gap-0 text-gray-600 md:grid-cols-2 md:gap-16'>
                 <div>
                     <div className='flex items-center pr-2 mb-3'>
                         <svg className='w-8 h-8 text-blue-500 dark:text-blue-700' aria-hidden='true' fill='currentColor' viewBox='0 0 448 512' xmlns='http://www.w3.org/2000/svg'>
