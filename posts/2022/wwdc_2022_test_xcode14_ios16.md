@@ -17,11 +17,13 @@ While we are working on further improvements and the support of new features, yo
 1. Install the CLI with `[sudo] npm i -g titanium alloy`
 2. `titanium sdk install -b master`
 
-You can also execute `titanium sdk install latest` to get the latest **GA** of the Titanium SDK
+You can also execute `titanium sdk install latest` to get the latest **GA** of the Titanium SDK.
+
+**NEW**: We just launched the revamped [Titanium SDK Downloads](https://downloads.titaniumsdk.com/) page, check it out!
 
 ## Rollback
 
-Execute `titanium sdk select 10.1.1.GA` to rollback
+Execute `titanium sdk select 10.1.1.GA` to rollback.
 
 ## Planned Features
 
