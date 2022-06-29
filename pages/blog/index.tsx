@@ -11,8 +11,8 @@ export default function Blog(props: InferGetStaticPropsType<typeof getStaticProp
             </Head>
             <div className='grid grid-cols-12 pb-10 sm:px-5 sm:gap-x-0 md:gap-x-8 gap-y-16'>
                 {props.pages
-                    .sort(function (a, b) {
-                        return new Date(b.date) - new Date(a.date);
+                    .sort(function (a: PageMeta, b: PageMeta) {
+                        return (b.date ? Date.parse(b.date) : 0) - (a.date ? Date.parse(a.date) : 0);
                     })
                     .map((page: PageMeta, i: number) => (
                         <div key={i} className='flex flex-col items-start col-span-12 space-y-3 sm:col-span-6 xl:col-span-4'>

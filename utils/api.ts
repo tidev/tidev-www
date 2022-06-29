@@ -1,8 +1,8 @@
 import fs from 'fs';
-import globby from 'globby';
 import matter from 'gray-matter';
 import md from 'markdown-it';
 import path from 'path';
+import { globby } from 'globby';
 import { ParsedUrlQuery } from 'querystring';
 
 export interface PageMeta {
