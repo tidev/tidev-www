@@ -37,8 +37,8 @@ Looking ahead to the next SDK version, we’re anticipating a number of both maj
 
 Titanium SDK 11 and CLI 6.1.0 are a strong start to Titanium’s new community-led future! We hope you enjoy this release and all that it has to offer for building amazing mobile applications. Please remember that TiDev relies entirely on community contributions -- both code and financial -- in order to maintain the Titanium ecosystem. All our code is publicly available on Github and we welcome your pull-requests. To help fund our development efforts, we ask that you consider a recurring monthly donation via [Github Sponsors](https://github.com/sponsors/tidev) or [Liberapay](https://liberapay.com/tidev/). **As we are a registered non-profit, donations are tax deductible under IRS 501c3 regulations.**
 
-We’re excited to bring you these releases and are optimistic for Titanium’s future. Ti Strong!
+We’re excited to bring you these releases and are optimistic for Titanium’s future. **Ti Strong!**
 
-Josh Lambert
-Board Chairman
+Josh Lambert  
+Board Chairman  
 TiDev, Inc.
