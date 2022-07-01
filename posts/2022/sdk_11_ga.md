@@ -10,8 +10,8 @@ teaser: 'First official GA release of the SDK under TiDev Management & Control.'
 
 On July 1st, 2022, we published the General Availability version of TiDev’s Titanium SDK, and a new version of the Titanium CLI. This SDK version is a major release — the first under non-profit TiDev, Inc leadership and management — featuring 62+ feature and bug-fix contributions from TiDev staff and the Titanium community at large. For a full list of changes in the SDK and CLI, we encourage you to review their respective release notes at the links below:
 
-For the SDK: https://titaniumsdk.com/guide/Titanium_SDK/Titanium_SDK_Release_Notes/Titanium_SDK_Release_Notes_11.x/Titanium_SDK_11.0.0.GA_Release_Note.html
-For the CLI: https://github.com/tidev/titanium/releases/tag/v6.1.0
+- **For the SDK:** https://titaniumsdk.com/guide/Titanium_SDK/Titanium_SDK_Release_Notes/Titanium_SDK_Release_Notes_11.x/Titanium_SDK_11.0.0.GA_Release_Note.html
+- **For the CLI:** https://github.com/tidev/titanium/releases/tag/v6.1.0
 
 **This release marks an important community milestone in that you can develop, run, and distribute a Titanium mobile app entirely from TiDev tooling without any dependencies on the older appc system.** All copyrights and licensing information has also been updated to reflect Titanium’s new open-source future.
 
