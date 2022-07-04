@@ -1,7 +1,7 @@
 import DefaultErrorPage from 'next/error';
-import Head from 'next/head';
 import { findContent, IParams, loadContent } from '../../utils/api';
 import { GetStaticProps, InferGetStaticPropsType } from 'next';
+import { NextSeo } from 'next-seo';
 
 export default function BlogPost({ page }: InferGetStaticPropsType<typeof getStaticProps>) {
     if (!page) {
@@ -13,9 +13,20 @@ export default function BlogPost({ page }: InferGetStaticPropsType<typeof getSta
     return (
         <>
             <div className='mx-auto prose'>
-                <Head>
-                    <title>{data.title} - TiDev</title>
-                </Head>
+                <NextSeo
+                title={data.title + " - TiDev"}
+                description={data.teaser}
+                openGraph={{
+                  url: 'https://tidev.io/',
+                  title: data.title,
+                  description: data.teaser,
+                  images: [
+                    { url: data.image }
+                  ],
+                  site_name: 'TiDev',
+                }}
+                />
+
                 <div className='prose'>
                     <h1>{data.title}</h1>
                 </div>
