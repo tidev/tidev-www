@@ -1,4 +1,4 @@
-import Head from 'next/head';
+import { NextSeo } from 'next-seo';
 import Link from 'next/link';
 import { findContent, PageMeta } from '../../utils/api';
 import { GetStaticProps, InferGetStaticPropsType } from 'next';
@@ -6,9 +6,11 @@ import { GetStaticProps, InferGetStaticPropsType } from 'next';
 export default function Blog(props: InferGetStaticPropsType<typeof getStaticProps>) {
     return (
         <>
-            <Head>
-                <title>Blog - TiDev</title>
-            </Head>
+            <NextSeo
+            title="Blog - TiDev"
+            description="TiDev is a nonprofit organization dedicated to continuing the development of the open source Titanium SDK."
+            />
+
             <div className='grid grid-cols-12 pb-10 sm:px-5 sm:gap-x-0 md:gap-x-8 gap-y-16'>
                 {props.pages
                     .sort(function (a: PageMeta, b: PageMeta) {

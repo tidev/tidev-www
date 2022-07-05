@@ -4,6 +4,7 @@ date: '2022-07-01'
 category: 'Release'
 author: 'Josh Lambert'
 teaser: 'First official GA release of the SDK under TiDev Management & Control.'
+image: 'https://tidev.io/sdk11.png'
 ---
 
 ## Overview
