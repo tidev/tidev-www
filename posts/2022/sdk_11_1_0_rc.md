@@ -3,10 +3,10 @@ title: 'Titanium SDK 11.1.0.RC released'
 date: '2022-08-29'
 category: 'Release'
 author: 'Michael Gangolf'
-teaser: 'The first test version of the next Titanium SDK 11.1.0.RC is available.'
+teaser: 'The first release candidate of the next Titanium SDK 11.1.0.RC is available.'
 ---
 
-The first test version of the next Titanium SDK is available: <b>11.1.0.RC</b>. Titanium SDK 11.1.0 is a minor release of the SDK, addressing high-priority issues from previous releases.
+The first release candidate of the next Titanium SDK is available: <b>11.1.0.RC</b>. Titanium SDK 11.1.0 is a minor release of the SDK, addressing high-priority issues from previous releases.
 
 For a more detailed overview, known issues and closed tickets, see the release notes: [Titanium SDK 11.1.0.RC Release Note](https://titaniumsdk.com/guide/Titanium_SDK/Titanium_SDK_Release_Notes/Titanium_SDK_Release_Notes_11.x/Titanium_SDK_11.1.0.RC_Release_Note.html).
 
@@ -15,11 +15,12 @@ For a more detailed overview, known issues and closed tickets, see the release n
 **Follow these steps to get SDK 11.1.0.RC:**
 
 1. Install the CLI with `[sudo] npm i -g titanium alloy`
-2. `titanium sdk install 11.1.0.RC`
+2. Run `titanium sdk install 11.1.0.RC`
+3. Set `<sdk-version>11.1.0.RC</sdk-version>` in your `tiapp.xml`
 
 ## Rollback
 
-Execute `titanium sdk install latest` to rollback
+Execute `titanium sdk install latest --default` to rollback.
 
 ## Report Bugs
 
