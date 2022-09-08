@@ -11,7 +11,7 @@ In addition, it already includes early support for iOS 16 and Xcode 14, making i
 
 Also, the release focussed on more parity and stability improvements, making it the most mature framework iteration to date.
 
-For a more detailed overview, known issues and closed tickets, see the release notes: [Titanium SDK 11.1.0.GA Release Note](https://titaniumsdk.com/guide/Titanium_SDK/Titanium_SDK_Release_Notes/Titanium_SDK_Release_Notes_11.x/Titanium_SDK_11.1.0.GA_Release_Note.html).
+For a more detailed overview, known issues and closed tickets, see the release notes: [Titanium SDK 11.1.0.GA Release Note](https://titaniumsdk.com/guide/Titanium_SDK/Titanium_SDK_Release_Notes/Titanium_SDK_Release_Notes_11.x/Titanium_SDK_11.1.0.GA_Release_Note.html) and [this awesome blog post](https://dev.to/miga/titanium-news-10-1dep) by [@m1ga](https://github.com/m1ga) with many practical examples around the release! 
 
 ## Install
 
