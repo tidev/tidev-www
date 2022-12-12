@@ -8,6 +8,8 @@ teaser: 'The first release candidate of the next Titanium SDK 12.0.0.RC is avail
 
 The first release candidate of the next Titanium SDK is available: <b>12.0.0.RC</b>. Titanium SDK 12.0.0 is a major release of the SDK, addressing high-priority issues from previous releases.
 
+iOS adds support for DynamicIslands and adds a new error page layout. Andorid targetSDK is now 33 and you can use Material3 themes like `Theme.Titanium.Material3.DayNight`.
+
 For a more detailed overview, known issues and closed tickets, see the release notes: [Titanium SDK 12.0.0.RC Release Note](https://titaniumsdk.com/guide/Titanium_SDK/Titanium_SDK_Release_Notes/Titanium_SDK_Release_Notes_12.x/Titanium_SDK_12.0.0.RC_Release_Note.html).
 
 ## Install
