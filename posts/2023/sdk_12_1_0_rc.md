@@ -33,7 +33,8 @@ Execute `titanium sdk install latest --default` to rollback.
 ### iOS
 
 There is currently a known issue when using Xcode 14.3 to build an app for production. We expect a fix for this issue in the upcoming GA
-version of the 12.1.0 SDK. Until then, we advise you to use Xcode 14.2 for a stable environment.
+version of the 12.1.0 SDK. Until then, we advise you to use Xcode 14.2 for a stable environment. You can try the fix today by downloading
+a preview SDK [here](https://github.com/tidev/titanium_mobile/suites/11976292962/artifacts/628447503) and provide feedback in the [pull request](https://github.com/tidev/titanium_mobile/pull/13786).
 
 ## Report Bugs
 
