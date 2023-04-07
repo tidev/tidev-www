@@ -6,18 +6,22 @@ export default function Hero() {
     return (
         <>
             <div className='py-12 text-center'>
-                <div className='mb-2 text-sm font-bold tracking-wider text-blue-500 uppercase dark:text-blue-700'>Write in JavaScript. Run native everywhere.</div>
-                <h2 className='mb-5 text-4xl font-black md:text-4xl dark:text-gray-200'>We are Titanium</h2>
-                <h3 className='mx-auto text-lg text-gray-700 md:text-xl md:leading-relaxed lg:w-2/3'>The Titanium SDK helps you to build native cross-platform mobile application using JavaScript and the Titanium API, which abstracts the native APIs of the mobile platforms. Titanium empowers you to create immersive, full-featured applications, featuring over 80% code reuse across mobile apps.</h3>
+                <div className='mb-2 text-sm font-bold tracking-wider text-blue-500 uppercase dark:text-blue-700'>
+                    Write in JavaScript. Run native everywhere.
+                </div>
+                <h2 className='mb-5 text-4xl font-black md:text-4xl dark:text-gray-200'>
+                    We are Titanium
+                </h2>
+                <h3 className='mx-auto text-lg md:text-xl md:leading-relaxed lg:w-2/3'>
+                    The Titanium SDK helps you to build native cross-platform mobile application using JavaScript and the
+                    Titanium API, which abstracts the native APIs of the mobile platforms. Titanium empowers you to create
+                    immersive, full-featured applications, featuring over 80% code reuse across mobile apps.
+                </h3>
                 <div className='flex justify-center'>
-                    <Link href='https://titaniumsdk.com' passHref>
-                        <a target='_blank' className='px-8 py-3 my-5 font-semibold text-white bg-blue-500 rounded dark:bg-blue-700 hover:bg-blue-700 whitespace-nowrap'>
-                            Learn the API
-                        </a>
+                    <Link href='https://titaniumsdk.com' target='_blank' className='px-8 py-3 my-5 font-semibold text-white bg-blue-500 rounded dark:bg-blue-700 hover:bg-blue-700 whitespace-nowrap'>
+                        Learn the API
                     </Link>
-                    <Link href='/donate'>
-                        <a className='px-8 py-3 my-5 ml-5 font-semibold text-white bg-blue-500 rounded dark:bg-blue-700 hover:bg-blue-700 whitespace-nowrap'>Donate</a>
-                    </Link>
+                    <Link href='/donate' className='px-8 py-3 my-5 ml-5 font-semibold text-white bg-blue-500 rounded dark:bg-blue-700 hover:bg-blue-700 whitespace-nowrap'>Donate</Link>
                 </div>
             </div>
 
@@ -29,7 +33,7 @@ export default function Hero() {
                         <span className='relative text-xl text-white transition duration-150 ease-out transform group-hover:scale-125'>JS</span>
                     </div>
                     <h3 className='mb-2 text-lg font-bold'>Titanium SDK</h3>
-                    <p className='leading-relaxed text-center text-gray-600'>Titanium lets you develop cross-platform native mobile applications and build great mobile experiences using JavaScript.</p>
+                    <p className='leading-relaxed text-center'>Titanium lets you develop cross-platform native mobile applications and build great mobile experiences using JavaScript.</p>
                 </div>
                 <div className='py-5 text-center'>
                     <div className='relative inline-flex items-center justify-center w-12 h-12 mb-8 ml-3 group'>
@@ -40,7 +44,7 @@ export default function Hero() {
                         </svg>
                     </div>
                     <h3 className='mb-2 text-lg font-bold'>Rich APIs</h3>
-                    <p className='leading-relaxed text-center text-gray-600'>Access hundreds of native UI and non-visual components (such as networks and media APIs) within your application.</p>
+                    <p className='leading-relaxed text-center'>Access hundreds of native UI and non-visual components (such as networks and media APIs) within your application.</p>
                 </div>
                 <div className='py-5 text-center'>
                     <div className='relative inline-flex items-center justify-center w-12 h-12 mb-8 ml-3 group'>
@@ -51,7 +55,7 @@ export default function Hero() {
                         </svg>
                     </div>
                     <h3 className='mb-2 text-lg font-bold'>Module Ecosystem</h3>
-                    <p className='leading-relaxed text-center text-gray-600'>Easily include third-party modules in your apps with Titanium's wide selection of community modules and premium support integrations.</p>
+                    <p className='leading-relaxed text-center'>Easily include third-party modules in your apps with Titanium's wide selection of community modules and premium support integrations.</p>
                 </div>
             </div>
         </>

@@ -8,18 +8,16 @@ on:
       - main
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      # third-party action that cancels previous runs
-      - name: Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.4.0
-        with:
-          access_token: ${{ github.token }}
-
       - name: Cloning repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
 

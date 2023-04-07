@@ -23,7 +23,7 @@ export default function Blog(props: InferGetStaticPropsType<typeof getStaticProp
                             </div>
                             <h2 className='text-lg font-bold sm:text-xl md:text-2xl'>
                                 <Link href={`/blog/${page.slug}`}>
-                                    <a>{page.title}</a>
+                                    {page.title}
                                 </Link>
                             </h2>
                             <p className='text-sm text-gray-500'>{page.teaser}…</p>

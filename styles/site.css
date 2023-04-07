@@ -32,10 +32,11 @@
     p a,
     strong,
     code {
-        color: #eee !important;
+        color: #eee;
     }
 
     p a {
+        @apply text-blue-500 dark:text-blue-700;
         text-decoration: underline;
     }
 
