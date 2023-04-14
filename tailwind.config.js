@@ -14,7 +14,24 @@ module.exports = {
                     '900': '#25272A',
                     '800': '#23272B'
                 }
-            }
+            },
+            typography: ({ theme }) => ({
+                DEFAULT: {
+                    css: {
+                        '--tw-prose-headings': theme('colors.white'),
+                        '--tw-prose-code': '#FF0000',
+                        '--tw-prose-bold': theme('colors.white'),
+                        '--tw-prose-links': '#198ac2',
+                        '--tw-prose-code': '#ff62d0',
+                        'code::before': {
+                            content: '""',
+                        },
+                        'code::after': {
+                            content: '""',
+                        },
+                    }
+                }
+            })
         }
     },
     variants: {

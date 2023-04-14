@@ -14,17 +14,17 @@ export default function BlogPost({ page }: InferGetStaticPropsType<typeof getSta
         <>
             <div className='mx-auto prose'>
                 <NextSeo
-                title={data.title + " - TiDev"}
-                description={data.teaser}
-                openGraph={{
-                  url: 'https://tidev.io/',
-                  title: data.title,
-                  description: data.teaser,
-                  images: [
-                    { url: data.image }
-                  ],
-                  site_name: 'TiDev',
-                }}
+                    title={data.title + " - TiDev"}
+                    description={data.teaser}
+                    openGraph={{
+                    url: 'https://tidev.io/',
+                    title: data.title,
+                    description: data.teaser,
+                    images: [
+                        { url: data.image }
+                    ],
+                    site_name: 'TiDev',
+                    }}
                 />
 
                 <div className='prose'>

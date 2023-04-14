@@ -12,35 +12,49 @@
     text-align: center;
 }
 
-@media (prefers-color-scheme: dark) {
-    html,
-    body {
-        background-color: #25272a !important;
-    }
+html,
+body {
+    background-color: #25272a !important;
+}
 
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6,
-    p,
-    ul,
-    ol,
-    li,
-    li a,
-    p a,
-    strong,
-    code {
-        color: #eee;
-    }
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+ol,
+li,
+li a,
+p a,
+strong,
+code {
+    color: #eee;
+}
 
-    p a {
-        @apply text-blue-500 dark:text-blue-700;
-        text-decoration: underline;
-    }
+h2 {
+    @apply mb-5 text-4xl font-black md:text-4xl text-gray-200 dark:text-gray-200;
+}
 
-    .logo {
-        content: url('/tidev-logo-dark.png');
-    }
+p a {
+    @apply text-blue-500 dark:text-blue-700;
+    text-decoration: underline;
+}
+
+p strong {
+    color: inherit;
+}
+
+.logo {
+    content: url('/tidev-logo-dark.png');
+}
+
+.button {
+    @apply text-white bg-blue-700 border-0 py-2 px-6 focus:outline-none hover:bg-blue-500 rounded text-lg no-underline;
+}
+
+.button:disabled {
+    @apply text-white bg-gray-500 border-0 py-2 px-6 focus:outline-none rounded text-lg no-underline;
 }

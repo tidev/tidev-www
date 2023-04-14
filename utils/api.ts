@@ -46,7 +46,7 @@ export async function loadContent(type: string, slug: string): Promise<Page | un
 
 			const html = md({
 				html: true,
-				linkify: true,
+				linkify: true
 			}).render(content);
 
 			return {

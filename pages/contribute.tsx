@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { useSession, signIn } from 'next-auth/react';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { CLAInfo } from '../utils/cla';
 import type { Session } from 'next-auth';
 
@@ -33,6 +33,7 @@ export default function CLA() {
 
 function ShowCLA({ claInfo, session }: { claInfo: CLAInfo | null, session: Session }) {
 	const { name } = session.user as any;
+	claInfo = null; // TEMP!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	return (
 		<div className='md:w-3/4 w-full mx-auto'>
 			<h2 className='mb-5 text-4xl text-center font-black md:text-4xl dark:text-gray-200'>
@@ -47,18 +48,51 @@ function ShowCLA({ claInfo, session }: { claInfo: CLAInfo | null, session: Sessi
 function ShowCLADownload() {
 	return (
 		<>
-			<p className='my-10'>Thank you for signing the CLA!</p>
-			<p>
-				<a className='text-white bg-blue-700 border-0 py-2 px-6 focus:outline-none hover:bg-blue-500 rounded text-lg no-underline' href='/api/cla/download' target='_blank'>Download CLA</a>
+			<p className='my-10 text-center'>Thank you for signing the CLA!</p>
+			<p className='my-10 text-center'>
+				<a className='button' href='/api/cla/download' target='_blank'>Download CLA</a>
 			</p>
 		</>
 	);
 }
 
 function ShowCLAForm() {
+	const containerRef = useRef(null);
+
+	useEffect(() => {
+		const container = containerRef.current;
+		// let PSPDFKit: any;
+
+		(async function () {
+			// PSPDFKit = await import('pspdfkit');
+
+			// if (PSPDFKit) {
+			// 	PSPDFKit.unload(container);
+			// }
+
+			const { host, protocol } = window.location;
+			// const instance = await PSPDFKit.load({
+			// 	container,
+			// 	document: "/CONTRIBUTOR_CLA.pdf",
+			// 	baseUrl: `${protocol}//${host}/`,
+			// 	licenseKey: process.env.PSPDFKIT_LICENSE_KEY,
+			// 	toolbarItems: [
+			// 		'zoom-out', 'zoom-in', 'zoom-mode', 'signature', 'spacer', 'search', 'form-creator', 'export-pdf'
+			// 	].map(type => ({ type }))
+			// });
+		})();
+
+		// return () => PSPDFKit?.unload(container);
+	}, []);
+
 	return (
 		<>
-			<p>Please review the Contributor License Agreement, fill out the required fields, and submit when ready.</p>
+			<p className='my-10'>Please review the Contributor License Agreement, fill out the required fields, and submit when ready.</p>
+			<div ref={containerRef} style={{height: '70vh', width: '100%'}}></div>
+			<p className='my-10 text-center'>
+				<button className='button'
+					disabled={true}>Submit</button>
+			</p>
 		</>
 	);
 }

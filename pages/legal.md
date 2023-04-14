@@ -2,7 +2,7 @@
 title: 'Legal'
 ---
 
-**Corporation Information**
+## Corporation Information
 
 TiDev, Inc is a registered 501c3 non-profit corporation based in Bibb County, Alabama
 
@@ -10,12 +10,12 @@ Our office address is
 _38 Court Square West
 Centreville, AL 35042_
 
-**Software Licenses**
+## Software Licenses
 
 -   All TiDev source code is open-source and released under V2.0 of the [Apache License](https://www.apache.org/licenses/LICENSE-2.0).
 -   All TiDev docs are licensed under the [MIT license](https://en.wikipedia.org/wiki/MIT_License).
 
-**How We Handle Volunteer Contributions**
+## How We Handle Volunteer Contributions
 
 Before accepting any software or docs contributions from TiDev staff or worldwide volunteers, we require a CLA to be signed and on file between the contributor and the TiDev software foundation. This is to protect the rights of those that choose to built on top of the TiDev SDK and related projects.
 
@@ -24,7 +24,7 @@ https://github.com/tidev/organization-docs/blob/main/CONTRIBUTOR_CLA.pdf
 
 Our process for getting a CLA on file can be found here: [CLA process](https://github.com/tidev/organization-docs/blob/main/AUTHORIZED_CONTRIBUTORS.md)
 
-**Open Source Attributions**
+## Open Source Attributions
 
 _Titanium SDK contains the following open source software:_
 

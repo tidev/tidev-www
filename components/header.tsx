@@ -7,7 +7,7 @@ export default function Header() {
         <header className='relative w-full px-8 text-gray-700 bg-white dark:bg-neutral-900 body-font'>
             <div className='container flex flex-col flex-wrap items-center justify-between py-5 mx-auto md:flex-row max-w-7xl'>
                 <div className='relative flex flex-col md:flex-row'>
-                    <Link href='/' className='flex items-center mb-5 font-medium text-gray-900 lg:w-auto justify-center md:mb-0'>
+                    <Link href='/' className='flex items-center mb-5 font-medium text-white lg:w-auto justify-center md:mb-0'>
                         <Image src='/tidev-logo.png' className='logo' alt='tiDev Logo' width={115} height={50} />
                     </Link>
                     <nav className='flex flex-wrap items-center mb-5 text-base md:mb-0 md:pl-8 md:ml-8 md:border-l md:border-gray-200'>
