@@ -1,8 +1,8 @@
-import '../styles/site.css';
-import type { AppProps } from 'next/app';
 import Layout from '../components/layout';
 import { NextSeo } from 'next-seo';
 import { SessionProvider } from 'next-auth/react';
+import type { AppProps } from 'next/app';
+import '../styles/site.css';
 
 export default function App({
   Component,
@@ -32,7 +32,6 @@ export default function App({
           cardType: 'summary_large_image',
         }}
         />
-          <link rel="icon" href="/favicon.ico" />
         <Component {...pageProps} />
       </Layout>
     </SessionProvider>

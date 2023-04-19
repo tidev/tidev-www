@@ -58,3 +58,33 @@ p strong {
 .button:disabled {
     @apply text-white bg-gray-500 border-0 py-2 px-6 focus:outline-none rounded text-lg no-underline;
 }
+
+.pdf-container {
+    @apply w-full;
+    height: calc(100vh - 206px);
+}
+
+.step-line {
+    @apply h-full w-10 absolute inset-0 flex items-center justify-center;
+}
+
+.step-line > div {
+    @apply h-full w-1 bg-gray-500 pointer-events-none;
+}
+
+.step-bubble {
+    @apply flex-shrink-0 w-10 h-10 rounded-full bg-blue-700 inline-flex items-center justify-center text-white relative z-10;
+}
+
+.step-label {
+    @apply font-medium text-sm text-gray-500 mb-1 tracking-wider;
+}
+
+.step-button {
+    @apply flex items-center text-white bg-blue-700 border-0 py-2 px-4 mt-4 focus:outline-none hover:bg-blue-500 rounded;
+}
+
+.step-disabled > .step-bubble,
+.step-disabled .step-button {
+    @apply bg-gray-500;
+}

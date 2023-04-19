@@ -1,8 +1,11 @@
 import Link from 'next/link';
-import { useSession, signIn } from 'next-auth/react';
 import { useEffect, useRef, useState } from 'react';
+import { useSession, signIn } from 'next-auth/react';
 import type { CLAInfo } from '../utils/cla';
 import type { Session } from 'next-auth';
+import * as pdfjs from 'pdfjs-dist';
+
+pdfjs.GlobalWorkerOptions.workerSrc = 'pdf.worker.js';
 
 export default function CLA() {
 	const { data: session, status } = useSession();
@@ -57,41 +60,130 @@ function ShowCLADownload() {
 }
 
 function ShowCLAForm() {
-	const containerRef = useRef(null);
+	const canvasRef = useRef<HTMLCanvasElement | null>(null);
+	const renderTaskRef = useRef<pdfjs.RenderTask | null>(null);
+	const [pdfDocument, setPdfDocument] = useState<pdfjs.PDFDocumentProxy>();
 
 	useEffect(() => {
-		const container = containerRef.current;
-		// let PSPDFKit: any;
-
-		(async function () {
-			// PSPDFKit = await import('pspdfkit');
-
-			// if (PSPDFKit) {
-			// 	PSPDFKit.unload(container);
-			// }
-
-			const { host, protocol } = window.location;
-			// const instance = await PSPDFKit.load({
-			// 	container,
-			// 	document: "/CONTRIBUTOR_CLA.pdf",
-			// 	baseUrl: `${protocol}//${host}/`,
-			// 	licenseKey: process.env.PSPDFKIT_LICENSE_KEY,
-			// 	toolbarItems: [
-			// 		'zoom-out', 'zoom-in', 'zoom-mode', 'signature', 'spacer', 'search', 'form-creator', 'export-pdf'
-			// 	].map(type => ({ type }))
-			// });
-		})();
-
-		// return () => PSPDFKit?.unload(container);
+		pdfjs.getDocument('CONTRIBUTOR_CLA.pdf').promise.then(doc => {
+			setPdfDocument(doc);
+		});
 	}, []);
+
+	const drawPdf = async (page: pdfjs.PDFPageProxy) => {
+		const canvas = canvasRef.current;
+		const canvasContext = canvas?.getContext('2d');
+		if (!canvas || !canvasContext) {
+			return;
+		}
+
+		const pixelRatio = window.devicePixelRatio;
+		const scale = pixelRatio;
+		const viewport = page.getViewport({ scale });
+
+		canvas.style.width = `${viewport.width / pixelRatio}px`;
+		canvas.style.height = `${viewport.height / pixelRatio}px`;
+		canvas.width = viewport.width;
+		canvas.height = viewport.height;
+
+		if (renderTaskRef.current) {
+			renderTaskRef.current.cancel();
+			return;
+		}
+
+		renderTaskRef.current = page.render({
+			canvasContext,
+			viewport
+		});
+
+		try {
+			await renderTaskRef.current?.promise;
+			renderTaskRef.current = null;
+		} catch (err: any) {
+			renderTaskRef.current = null;
+			if (err?.name === 'RenderingCancelledException') {
+				await drawPdf(page);
+			}
+		}
+	};
+
+	useEffect(() => {
+		pdfDocument?.getPage(1).then(drawPdf);
+	}, [canvasRef, pdfDocument]);
 
 	return (
 		<>
-			<p className='my-10'>Please review the Contributor License Agreement, fill out the required fields, and submit when ready.</p>
-			<div ref={containerRef} style={{height: '70vh', width: '100%'}}></div>
+			<div className='mb-6 text-center text-sm font-bold tracking-wider text-blue-500 uppercase dark:text-blue-700'>
+				Let's get started!
+			</div>
+			<div className="flex flex-row w-full">
+				<div className="lg:w-2/5 md:w-1/2 md:pr-10">
+					<div className="flex relative pb-12">
+						<div className="step-line"><div></div></div>
+						<div className="step-bubble">
+							<svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-5 h-5" viewBox="0 0 24 24">
+								<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+							</svg>
+						</div>
+						<div className="flex-grow pl-4">
+							<h2 className="step-label">STEP 1</h2>
+							<p className="leading-relaxed">Read the agreement</p>
+							<p className="leading-relaxed">
+								<button className="step-button">Continue
+									<svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-4 h-4 ml-2" viewBox="0 0 24 24">
+										<path d="M5 12h14M12 5l7 7-7 7"></path>
+									</svg>
+								</button>
+							</p>
+						</div>
+					</div>
+					<div className="flex relative pb-12 step-disabled">
+						<div className="step-line"><div></div></div>
+						<div className="step-bubble">
+							<svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-5 h-5" viewBox="0 0 24 24">
+								<path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"></path>
+								<circle cx="12" cy="7" r="4"></circle>
+							</svg>
+						</div>
+						<div className="flex-grow pl-4">
+							<h2 className="step-label">STEP 2</h2>
+							<p className="leading-relaxed">Enter your information</p>
+							{/* <p className="leading-relaxed">
+								<button className="step-button">Continue
+									<svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-4 h-4 ml-2" viewBox="0 0 24 24">
+										<path d="M5 12h14M12 5l7 7-7 7"></path>
+									</svg>
+								</button>
+							</p> */}
+						</div>
+					</div>
+					<div className="flex relative pb-12 step-disabled">
+						<div className="step-bubble">
+							<svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-5 h-5" viewBox="0 0 24 24">
+								<path d="M22 11.08V12a10 10 0 11-5.93-9.14"></path>
+								<path d="M22 4L12 14.01l-3-3"></path>
+							</svg>
+						</div>
+						<div className="flex-grow pl-4">
+							<h2 className="step-label">STEP 3</h2>
+							<p className="leading-relaxed">Review and submit</p>
+							{/* <p className="leading-relaxed">
+								<button className="step-button">Continue
+									<svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-4 h-4 ml-2" viewBox="0 0 24 24">
+										<path d="M5 12h14M12 5l7 7-7 7"></path>
+									</svg>
+								</button>
+							</p> */}
+						</div>
+					</div>
+				</div>
+				<div className="pdf-container">
+					<canvas ref={canvasRef} style={{ border: '1px solid black', direction: 'ltr' }} />
+				</div>
+			</div>
 			<p className='my-10 text-center'>
 				<button className='button'
-					disabled={true}>Submit</button>
+					disabled={true}>Continue to Sign</button>
 			</p>
 		</>
 	);

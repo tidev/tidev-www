@@ -13,7 +13,7 @@ export type CLAInfo = {
 interface CLACache {
 	[username: string]: {
 		info: CLAInfo;
-		ts: Number;
+		ts: number;
 	}
 }
 
