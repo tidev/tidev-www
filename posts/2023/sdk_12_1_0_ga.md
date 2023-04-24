@@ -3,10 +3,10 @@ title: 'Titanium SDK 12.1.0.GA released'
 date: '2023-04-24'
 category: 'Release'
 author: 'Hans Knöchel'
-teaser: 'The release candidate of the Titanium SDK 12.1.0.GA is available.'
+teaser: 'Support for Node.js 19 and enhances Android 13 / macOS support with Titanium SDK 11.1.0.GA'
 ---
 
-The release candidate of the next Titanium SDK is available: <b>12.1.0.GA</b>. Titanium SDK 12.1.0 is a minor release of the SDK,
+The next stable version of the Titanium SDK is now is available: <b>12.1.0.GA</b>. Titanium SDK 12.1.0 is a minor release of the SDK,
 addressing high-priority issues from previous releases. Highlights of this release are:
 
 - Support for Node.js 19
@@ -23,10 +23,6 @@ For a more detailed overview, known issues and closed tickets, see the release n
 1. Install the CLI with `[sudo] npm i -g titanium alloy`
 2. Run `titanium sdk install 12.1.0.GA`
 3. Set `<sdk-version>12.1.0.GA</sdk-version>` in your `tiapp.xml`
-
-## Rollback
-
-Execute `titanium sdk install latest --default` to rollback.
 
 ## Known Issues
 
