@@ -61,7 +61,6 @@ p strong {
 
 .pdf-container {
     @apply w-full;
-    height: calc(100vh - 206px);
 }
 
 .step-line {

@@ -1,9 +1,13 @@
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import { useSession, signIn } from 'next-auth/react';
+import * as pdfjs from 'pdfjs-dist';
+import { PDFDocument, StandardFonts } from 'pdf-lib';
 import type { CLAInfo } from '../utils/cla';
 import type { Session } from 'next-auth';
-import * as pdfjs from 'pdfjs-dist';
+import type { ExtendedProfile } from './api/auth/[...nextauth]';
+
+const CONTRIBUTOR_PDF = 'CONTRIBUTOR_CLA_1.2.pdf';
 
 pdfjs.GlobalWorkerOptions.workerSrc = 'pdf.worker.js';
 
@@ -38,12 +42,12 @@ function ShowCLA({ claInfo, session }: { claInfo: CLAInfo | null, session: Sessi
 	const { name } = session.user as any;
 	claInfo = null; // TEMP!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	return (
-		<div className='md:w-3/4 w-full mx-auto'>
+		<div className='w-full mx-auto'>
 			<h2 className='mb-5 text-4xl text-center font-black md:text-4xl dark:text-gray-200'>
 				Welcome {name}!
 			</h2>
 			{claInfo && <ShowCLADownload />}
-			{!claInfo && <ShowCLAForm />}
+			{!claInfo && <ShowCLAForm session={session} />}
 		</div>
 	);
 }
@@ -59,16 +63,9 @@ function ShowCLADownload() {
 	);
 }
 
-function ShowCLAForm() {
+function PDFPage({ page }: { page: pdfjs.PDFPageProxy }) {
 	const canvasRef = useRef<HTMLCanvasElement | null>(null);
 	const renderTaskRef = useRef<pdfjs.RenderTask | null>(null);
-	const [pdfDocument, setPdfDocument] = useState<pdfjs.PDFDocumentProxy>();
-
-	useEffect(() => {
-		pdfjs.getDocument('CONTRIBUTOR_CLA.pdf').promise.then(doc => {
-			setPdfDocument(doc);
-		});
-	}, []);
 
 	const drawPdf = async (page: pdfjs.PDFPageProxy) => {
 		const canvas = canvasRef.current;
@@ -77,12 +74,16 @@ function ShowCLAForm() {
 			return;
 		}
 
-		const pixelRatio = window.devicePixelRatio;
-		const scale = pixelRatio;
-		const viewport = page.getViewport({ scale });
+		// const pixelRatio = window.devicePixelRatio;
+		const viewport = page.getViewport({ scale: 2 });
+		const pageRatio = viewport.width / viewport.height;
+		// const scale = canvas.parentElement!.clientWidth / viewport.width;
+		// const scale = 2 * pixelRatio;
+		// const viewport = page.getViewport({ scale });
 
-		canvas.style.width = `${viewport.width / pixelRatio}px`;
-		canvas.style.height = `${viewport.height / pixelRatio}px`;
+		canvas.style.width = '100%';
+		// canvas.style.height = `${viewport.height * scale}px`;
+		canvas.style.aspectRatio = `${pageRatio}`;
 		canvas.width = viewport.width;
 		canvas.height = viewport.height;
 
@@ -108,8 +109,66 @@ function ShowCLAForm() {
 	};
 
 	useEffect(() => {
-		pdfDocument?.getPage(1).then(drawPdf);
-	}, [canvasRef, pdfDocument]);
+		drawPdf(page);
+	}, [canvasRef, page]);
+
+	return (
+		<canvas ref={canvasRef} style={{ border: '1px solid black', direction: 'ltr' }} />
+	);
+}
+
+function ShowCLAForm({ session }: { session: Session }) {
+	const [pdfPages, setPDFPages] = useState<pdfjs.PDFPageProxy[]>([]);
+
+	useEffect(() => {
+		(async () => {
+			const url = new URL(CONTRIBUTOR_PDF, window.location.href).href;
+			const res = await fetch(url);
+			const bytes = await res.arrayBuffer();
+			const pdfDoc = await PDFDocument.load(bytes);
+			const font = await pdfDoc.embedFont(StandardFonts.CourierBold);
+			const pages = pdfDoc.getPages();
+			const page = pages[4];
+			const { height } = page.getSize();
+			const now = new Date();
+			const user = (session.user ?? {}) as ExtendedProfile;
+			const today = `${now.getMonth() + 1}/${now.getDate()}/${now.getFullYear()}`;
+
+			const drawText = (x: number, y: number, str?: string | null) => {
+				if (str) {
+					page.drawText(str, {
+						x,
+						y: height - y,
+						size: 10,
+						font
+					});
+				}
+			};
+
+			// await drawImage(78, 192, 'JoshSignature.png', 0.3);
+			drawText(80, 248, 'Joshua Lambert');
+			drawText(80, 306, 'Board Chairman');
+			drawText(80, 364, 'TiDev, Inc.');
+			drawText(80, 422, 'tidev@smalltownhosting.com');
+			drawText(80, 480, today);
+
+			// await drawImage(312, 192, 'JoshSignature.png', 0.3);
+			drawText(314, 248, user.name);
+			drawText(314, 306, 'Your Title');
+			drawText(314, 364, user.company);
+			drawText(314, 422, user.email);
+			drawText(314, 480, today);
+			drawText(314, 538, user.username);
+
+			const pdfBytes = await pdfDoc.save();
+			const doc = await pdfjs.getDocument(pdfBytes).promise;
+			const pdfPages = [];
+			for (let i = 1; i <= doc.numPages; i++) {
+				pdfPages.push(await doc.getPage(i));
+			}
+			setPDFPages(pdfPages);
+		})();
+	}, []);
 
 	return (
 		<>
@@ -178,13 +237,13 @@ function ShowCLAForm() {
 					</div>
 				</div>
 				<div className="pdf-container">
-					<canvas ref={canvasRef} style={{ border: '1px solid black', direction: 'ltr' }} />
+					{pdfPages.map(page => <PDFPage page={page} />)}
 				</div>
 			</div>
-			<p className='my-10 text-center'>
+			{/* <p className='my-10 text-center'>
 				<button className='button'
 					disabled={true}>Continue to Sign</button>
-			</p>
+			</p> */}
 		</>
 	);
 }
