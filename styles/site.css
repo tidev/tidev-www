@@ -52,7 +52,7 @@ p strong {
 }
 
 .button {
-    @apply text-white bg-blue-700 border-0 py-2 px-6 focus:outline-none hover:bg-blue-500 rounded text-lg no-underline;
+    @apply text-white inline-flex bg-blue-700 border-0 py-2 px-6 focus:outline-none hover:bg-blue-500 rounded text-lg no-underline;
 }
 
 .button:disabled {
@@ -86,4 +86,8 @@ p strong {
 .step-disabled > .step-bubble,
 .step-disabled .step-button {
     @apply bg-gray-500;
+}
+
+.cla-field {
+    @apply absolute bg-yellow-200 border-yellow-500 border-2 px-2 py-1 text-black;
 }
