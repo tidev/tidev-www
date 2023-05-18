@@ -196,14 +196,13 @@ function ShowCLAForm({ user }: { user: ExtendedProfile | null }) {
 				Get Started
 			</h3>
 			<p className='mb-10'>Please carefully read the agreement. On the last page, login into GitHub, fill out your information, sign, and submit.</p>
-			<div className="pdf-container">
-				{pdfPages.map((page, i, arr) => {
-					if (i + 1 === arr.length) {
-						return <PDFPage page={page} user={user} />;
-					}
-					return <PDFPage page={page}/>;
-				})}
-			</div>
+			{pdfPages.map((page, i, arr) => {
+				if (i + 1 === arr.length) {
+					// user = null;
+					return <PDFPage key={`page_${i + 1}`} page={page} user={user} />;
+				}
+				return <PDFPage key={`page_${i + 1}`} page={page}/>;
+			})}
 		</>
 	);
 }
@@ -217,6 +216,29 @@ interface PDFPageParams {
 function PDFPage({ page, user }: PDFPageParams) {
 	const canvasRef = useRef<HTMLCanvasElement | null>(null);
 	const renderTaskRef = useRef<pdfjs.RenderTask | null>(null);
+	const formRef = useRef<HTMLFormElement | null>(null);
+	const [formData, setFormData] = useState({
+		fullname: user?.name || '',
+		title: '',
+		company: user?.company || '',
+		email: user?.email || ''
+	});
+
+	const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setFormData(prev => ({
+			...prev,
+			[e.target.name]: e.target.value
+		}));
+	}
+
+	const scaleForm = () => {
+		const canvas = canvasRef.current;
+		const form = formRef.current;
+		if (canvas && form) {
+			const scale: number = parseFloat(window.getComputedStyle(canvas).getPropertyValue('width')) / 1000;
+			form.style.transform = `scale(${scale})`;
+		}
+	};
 
 	const drawPdf = async (page: pdfjs.PDFPageProxy) => {
 		const canvas = canvasRef.current;
@@ -257,31 +279,56 @@ function PDFPage({ page, user }: PDFPageParams) {
 				await drawPdf(page);
 			}
 		}
+
+		scaleForm();
 	};
 
 	useEffect(() => {
 		drawPdf(page);
 	}, [canvasRef, page]);
 
+	useEffect(() => {
+		window.addEventListener('resize', scaleForm);
+	}, [formRef]);
+
+	const isValid = () => {
+		const { fullname, email } = formData;
+		return !!fullname.trim() && /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/.test(email.trim());
+	};
+
 	return (
-		<div className='relative' id={user ? 'sign' : undefined}>
-			{user && <form action="/api/cla/sign" method="post">
-				<input className='cla-field' name="fullname" value={user.name} style={{ right: '14%', top: '28%', width: '35%' }}/>
-				<input className='cla-field' name="title" style={{ right: '14%', top: '35.4%', width: '35%' }}/>
-				<input className='cla-field' name="company" value={user.company} style={{ right: '14%', top: '42.8%', width: '35%' }}/>
-				<input className='cla-field' name="email" value={user.email} style={{ right: '14%', top: '50.2%', width: '35%' }}/>
-				<div className="absolute text-center" style={{ right: '14%', top: '75%', width: '35%' }}>
-					<button className='button' type="submit" disabled={true}>Submit</button>
-				</div>
-			</form>}
+		<div className='relative'>
+			{user &&
+				<form action="/api/cla/sign" className="cla-form" method="post" ref={formRef}>
+					<input
+						name="fullname"
+						required
+						onChange={handleInput}
+						value={formData.fullname}
+						style={{ top: '365px' }}/>
+					<input
+						name="title"
+						onChange={handleInput}
+						value={formData.title}
+						style={{ top: '460px' }}/>
+					<input
+						name="company"
+						onChange={handleInput}
+						value={formData.company}
+						style={{ top: '554px' }}/>
+					<input
+						name="email"
+						required
+						onChange={handleInput}
+						value={formData.email}
+						style={{ top: '650px' }}/>
+					<div className="cla-submit" style={{ top: '950px' }}>
+						<button className='button' type="submit" disabled={!isValid()}>Submit</button>
+					</div>
+				</form>
+			}
 			{user === null && <>
-				<div className='absolute flex items-center justify-center bg-black bg-opacity-60 rounded-xl'
-					style={{
-						aspectRatio: 0.55,
-						right: '11%',
-						top: '18%',
-						width: '40%'
-					}}>
+				<div className='cla-login'>
 					<button className='button' onClick={() => signIn('github', { callbackUrl: '/contribute#sign' })}>
 						<svg className='w-6 h-6 flex-shrink-0 mr-2' aria-hidden='true' fill='currentColor' viewBox='0 0 24 24'>
 							<path d='M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z'></path>
@@ -290,7 +337,7 @@ function PDFPage({ page, user }: PDFPageParams) {
 					</button>
 				</div>
 			</>}
-			<canvas ref={canvasRef} style={{ border: '1px solid black', direction: 'ltr' }} />
+			<canvas id={user ? 'sign' : undefined} ref={canvasRef} style={{ border: '1px solid black', direction: 'ltr' }} />
 		</div>
 	);
 }

@@ -59,10 +59,6 @@ p strong {
     @apply text-white bg-gray-500 border-0 py-2 px-6 focus:outline-none rounded text-lg no-underline;
 }
 
-.pdf-container {
-    @apply w-full;
-}
-
 .step-line {
     @apply h-full w-10 absolute inset-0 flex items-center justify-center;
 }
@@ -88,6 +84,26 @@ p strong {
     @apply bg-gray-500;
 }
 
-.cla-field {
-    @apply absolute bg-yellow-200 border-yellow-500 border-2 px-2 py-1 text-black;
+.cla-login {
+    @apply absolute flex items-center justify-center bg-black bg-opacity-60 rounded-xl;
+    bottom: 13%;
+    top: 13%;
+    left: 8%;
+    right: 8%;
+}
+
+.cla-form {
+    transform-origin: top left;
+}
+
+.cla-form > input {
+    @apply absolute bg-yellow-200 border-yellow-500 border-2 px-2 py-1 text-black text-xl;
+    left: 510px;
+    width: 350px;
+}
+
+.cla-submit {
+    @apply absolute text-center;
+    left: 510px;
+    width: 350px;
 }
