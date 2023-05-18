@@ -96,14 +96,31 @@ p strong {
     transform-origin: top left;
 }
 
+.cla-signature {
+    @apply flex items-center justify-center cursor-pointer uppercase font-semibold text-blue-500 dark:text-blue-700;
+    height: 70px;
+}
+
+.cla-signature > span {
+    @apply inline-flex;
+}
+
 .cla-form > input {
-    @apply absolute bg-yellow-200 border-yellow-500 border-2 px-2 py-1 text-black text-xl;
+    @apply text-black;
+}
+
+.cla-signature, .cla-form > input {
+    @apply absolute bg-yellow-200 border-yellow-500 border-2 px-2 py-1 text-xl rounded-md;
     left: 510px;
-    width: 350px;
+    width: 352px;
+}
+
+.cla-form > input.cla-invalid {
+    @apply bg-red-200 border-red-400;
 }
 
 .cla-submit {
     @apply absolute text-center;
     left: 510px;
-    width: 350px;
+    width: 352px;
 }
