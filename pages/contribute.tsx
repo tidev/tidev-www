@@ -151,6 +151,12 @@ function ShowCLAForm({ user }: { user: ExtendedProfile | null }) {
 	const [pdfPages, setPDFPages] = useState<pdfjs.PDFPageProxy[]>([]);
 
 	useEffect(() => {
+		if (!user?.username) {
+			// return if no username, otherwise we risk a race condition where
+			// the `null` user will render after the loaded user info
+			return;
+		}
+
 		(async () => {
 			const url = new URL(CONTRIBUTOR_PDF, window.location.href).href;
 			const res = await fetch(url);
@@ -232,8 +238,8 @@ function PDFPage({ page, user }: PDFPageParams) {
 		company: user?.company || '',
 		email: user?.email || ''
 	});
-	const [showModal, setShowModal] = useState(true);
 	const [sigText, setSigText] = useState('');
+	const [showModal, setShowModal] = useState(true);
 
 	const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setFormData(prev => ({
@@ -440,10 +446,10 @@ function SignatureModal({
 									ref={sigCanvasRef}
 									/>
 							</div>
-							<div className={`cla-sig-bg cla-sig-bg-line ${activeTab === 'type' ? 'block' : 'hidden'}`}>
+							<div className={`cla-sig-bg cla-sig-text-line ${activeTab === 'type' ? 'block' : 'hidden'}`}>
 								<input
 									autoComplete="off"
-									className={`cla-sign-type ${signatureFont.className}`}
+									className={`cla-sign-text ${signatureFont.className}`}
 									name="sig-text"
 									onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSigText(e.target.value)}
 									ref={sigTextRef}
