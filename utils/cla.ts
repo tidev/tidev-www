@@ -49,22 +49,26 @@ export async function getPDFDownloadLink(username: string): Promise<string> {
 	return pdfURL;
 }
 
-export async function checkCLA(username: string): Promise<CLAInfo> {
+export async function checkCLA(username: string): Promise<CLAInfo | null> {
 	username = username.trim().toLowerCase();
 
 	if (cache[username] && cache[username].ts < (Date.now() + 5 * 60 * 1000)) {
 		return cache[username].info;
 	}
 
-	const bucket = getCLABucket();
-	const jsonFile = bucket.file(`${username[0]}/${username}.json`);
-	const [data] = await jsonFile.download();
-	const info: CLAInfo = JSON.parse(data.toString());
+	try {
+		const bucket = getCLABucket();
+		const jsonFile = bucket.file(`${username[0]}/${username}.json`);
+		const [data] = await jsonFile.download();
+		const info: CLAInfo = JSON.parse(data.toString());
 
-	cache[username] = {
-		info,
-		ts: Date.now()
+		cache[username] = {
+			info,
+			ts: Date.now()
+		}
+
+		return info;
+	} catch {
+		return null;
 	}
-
-	return info;
 }

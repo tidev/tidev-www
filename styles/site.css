@@ -80,6 +80,10 @@ p strong {
     height: 70px;
 }
 
+.cla-signature > img {
+    @apply max-w-full max-h-full;
+}
+
 .cla-signature > span {
     @apply inline-flex;
 }
@@ -94,7 +98,7 @@ p strong {
     width: 352px;
 }
 
-.cla-form > input.cla-invalid {
+.cla-form > .cla-invalid {
     @apply bg-red-200 border-red-400;
 }
 
@@ -129,7 +133,6 @@ p strong {
 input.cla-sign-text {
     @apply relative border-none bg-transparent text-5xl w-full outline-0 indent-2;
     line-height: 5rem;
-    xoutline: solid 1px red;
     z-index: 9999;
 }
 
