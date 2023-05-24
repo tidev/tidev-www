@@ -379,7 +379,7 @@ function PDFSignaturePage({ page, pageIdx, pdfDoc, user }: PDFSignaturePageParam
 			{user ? <>
 				<form className="cla-form" ref={formRef}>
 					<div
-						className={`cla-signature ${claSignatureErrorClass}`}
+						className={`cla-signature ${claSignatureErrorClass} ${sig?.trimmed ? 'justify-start' : 'justify-center'}`}
 						onClick={() => setShowModal(true)}
 						style={{ top: '240px' }}>
 						{sig?.trimmed

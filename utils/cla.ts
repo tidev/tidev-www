@@ -1,10 +1,12 @@
 import { join } from 'node:path';
 import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
 import { readFile, writeFile } from 'node:fs/promises';
+// import signer from 'node-signpdf';
 import { Storage } from '@google-cloud/storage';
 import { tmpdir } from 'node:os';
 
 const CONTRIBUTOR_PDF = 'CONTRIBUTOR_CLA_1.2.pdf';
+export const CLA_VERISON = '1.2';
 
 export type CLAInfo = {
 	username: string;
@@ -25,7 +27,7 @@ interface CLACache {
 
 const cache: CLACache = {};
 
-function getCLABucket() {
+export function getCLABucket() {
 	const storage = new Storage({
 		projectId: process.env.GCLOUD_PROJECT_ID,
 		credentials: {
@@ -79,13 +81,14 @@ export async function checkCLA(username: string): Promise<CLAInfo | null> {
 	}
 }
 
-export interface PDFData {
+export interface CreatePDFData {
 	fullname: string;
 	title: string;
 	company: string;
 	email: string;
 	signatureFile: string;
 	githubUsername: string;
+	today: string;
 };
 
 export async function createPDF({
@@ -94,10 +97,9 @@ export async function createPDF({
 	company,
 	email,
 	signatureFile,
-	githubUsername
-}: PDFData): Promise<string> {
-	const now = new Date();
-	const today = `${now.getMonth() + 1}/${now.getDate()}/${now.getFullYear()}`;
+	githubUsername,
+	today
+}: CreatePDFData): Promise<string> {
 	const pdfBytes = await readFile(join('public', CONTRIBUTOR_PDF));
 	const pdfDoc = await PDFDocument.load(pdfBytes);
 	const font = await pdfDoc.embedFont(StandardFonts.CourierBold);
@@ -168,7 +170,11 @@ export async function createPDF({
 	drawText(314, 480, today);
 	drawText(314, 538, githubUsername);
 
-	await writeFile(outFile, await pdfDoc.save());
+	// const p12cert = await readFile('public/tidev.p12');
+
+	const unsignedBytes = await pdfDoc.save();
+	// const signedBytes = signer.sign(unsignedBytes, p12cert);
+	await writeFile(outFile, unsignedBytes); // signedBytes
 
 	return outFile;
 }

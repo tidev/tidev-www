@@ -76,7 +76,7 @@ p strong {
 }
 
 .cla-signature {
-    @apply flex items-center justify-center cursor-pointer uppercase font-semibold text-blue-500 dark:text-blue-700;
+    @apply flex items-center cursor-pointer uppercase font-semibold text-blue-500 dark:text-blue-700 !px-2 !py-5;
     height: 70px;
 }
 
