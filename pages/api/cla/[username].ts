@@ -8,10 +8,10 @@ export default async function handler(
 	req: NextApiRequest,
 	res: NextApiResponse
 ) {
-	// if (req.headers.authorization !== 'Bearer secret') {
-	// 	res.status(403).json({ error: 'Forbidden' });
-	// 	return;
-	// }
+	if (req.headers.authorization !== 'Bearer secret') {
+		res.status(403).json({ error: 'Forbidden' });
+		return;
+	}
 
 	let { username } = req.query;
 	if (!username || typeof username !== 'string') {

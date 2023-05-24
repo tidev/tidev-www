@@ -266,7 +266,7 @@ function PDFSignaturePage({ page, pageIdx, pdfDoc, user }: PDFSignaturePageParam
 	const [sig, setSig] = useState<Signature | null>(null);
 	const [showModal, setShowModal] = useState(false);
 	const scrolledRef = useRef(false);
-	const isSigned = (sig: Signature | null) => !!(sig?.kind && sig.image);
+	const isSigned = (sig: Signature | null) => !!(sig?.kind && sig.image && sig.trimmed);
 	const isFullNameValid = () => !!formData.fullname.trim();
 	const isEmailValid = () => /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/.test(formData.email.trim());
 	const isValid = () => isSigned(sig) && isFullNameValid() && isEmailValid();
@@ -340,10 +340,44 @@ function PDFSignaturePage({ page, pageIdx, pdfDoc, user }: PDFSignaturePageParam
 		}
 	}, []);
 
+	const submitForm = (event: React.FormEvent<HTMLInputElement>) => {
+		event.preventDefault();
+
+		if (!isValid() || !sig?.trimmed) {
+			alert('Form is invalid!');
+			return;
+		}
+
+		const sigData = window.atob(sig.trimmed.split(',')[1]);
+		const ia = new Uint8Array(new ArrayBuffer(sigData.length));
+		for (let i = 0; i < sigData.length; i++) {
+			ia[i] = sigData.charCodeAt(i);
+		}
+		const sigBlob = new Blob([ia], { type: 'image/png' });
+
+		const fd = new FormData();
+		fd.set('fullname', formData.fullname);
+		fd.set('title', formData.title);
+		fd.set('company', formData.company);
+		fd.set('email', formData.email);
+		fd.set('signature', sigBlob, 'sig.png');
+
+		fetch('/api/cla/sign', {
+			method: 'POST',
+			body: fd
+		})
+			.then(res => {
+				console.log('SUCCESS!');
+			})
+			.catch(err => {
+				console.log('ERROR!', err);
+			});
+	};
+
 	return (
 		<div className='relative' id={user ? 'sign' : ''}>
 			{user ? <>
-				<form action="/api/cla/sign" className="cla-form" method="post" ref={formRef}>
+				<form className="cla-form" ref={formRef}>
 					<div
 						className={`cla-signature ${claSignatureErrorClass}`}
 						onClick={() => setShowModal(true)}
@@ -383,7 +417,7 @@ function PDFSignaturePage({ page, pageIdx, pdfDoc, user }: PDFSignaturePageParam
 						value={formData.email}
 						style={{ top: '650px' }}/>
 					<div className="cla-submit" style={{ top: '950px' }}>
-						<button className='button' type="submit" disabled={!isValid()}>Submit</button>
+						<button className='button' onClick={submitForm} disabled={!isValid()}>Submit</button>
 					</div>
 				</form>
 				{showModal &&
@@ -460,7 +494,7 @@ function SignatureModal({
 
 		setShowModal(false);
 
-		// console.log(image);
+		console.log(image);
 
 		onSave({
 			kind,

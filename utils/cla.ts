@@ -1,4 +1,10 @@
+import { join } from 'node:path';
+import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
+import { readFile, writeFile } from 'node:fs/promises';
 import { Storage } from '@google-cloud/storage';
+import { tmpdir } from 'node:os';
+
+const CONTRIBUTOR_PDF = 'CONTRIBUTOR_CLA_1.2.pdf';
 
 export type CLAInfo = {
 	username: string;
@@ -71,4 +77,98 @@ export async function checkCLA(username: string): Promise<CLAInfo | null> {
 	} catch {
 		return null;
 	}
+}
+
+export interface PDFData {
+	fullname: string;
+	title: string;
+	company: string;
+	email: string;
+	signatureFile: string;
+	githubUsername: string;
+};
+
+export async function createPDF({
+	fullname,
+	title,
+	company,
+	email,
+	signatureFile,
+	githubUsername
+}: PDFData): Promise<string> {
+	const now = new Date();
+	const today = `${now.getMonth() + 1}/${now.getDate()}/${now.getFullYear()}`;
+	const pdfBytes = await readFile(join('public', CONTRIBUTOR_PDF));
+	const pdfDoc = await PDFDocument.load(pdfBytes);
+	const font = await pdfDoc.embedFont(StandardFonts.CourierBold);
+	const pages = pdfDoc.getPages();
+	const page = pages[4];
+	const { height: pageHeight } = page.getSize();
+	const outFile = join(tmpdir(), `${githubUsername}.pdf`);
+
+	const drawText = (x: number, y: number, str: string) => {
+		page.drawText(str, {
+			x,
+			y: pageHeight - y,
+			size: 10,
+			font
+		});
+	};
+
+	const drawImage = async (x: number, y: number, file: string) => {
+		const bytes = await readFile(file);
+		const image = await pdfDoc.embedPng(bytes);
+		const imageRatio = image.width / image.height;
+		const bounds = { width: 210, height: 20 };
+		const boundsRatio = bounds.width / bounds.height;
+		let w, h;
+
+		if (imageRatio > boundsRatio) {
+			w = bounds.width;
+			h = image.height * (bounds.width / image.width);
+		} else {
+			w = image.width * (bounds.height / image.height);
+			h = bounds.height;
+		}
+
+		page.drawImage(image, {
+			x,
+			y: pageHeight - y,
+			width: w,
+			height: h
+		});
+	};
+
+	// page.drawRectangle({
+	// 	x: 80,
+	// 	y: pageHeight - 188,
+	// 	width: 210,
+	// 	height: 24,
+	// 	color: rgb(1, 0, 0)
+	// });
+	await drawImage(80, 188, 'utils/JoshSignature.png');
+	drawText(80, 248, 'Joshua Lambert');
+	drawText(80, 306, 'Board Chairman');
+	drawText(80, 364, 'TiDev, Inc.');
+	drawText(80, 422, 'tidev@smalltownhosting.com');
+	drawText(80, 480, today);
+
+	// page.drawRectangle({
+	// 	x: 316,
+	// 	y: pageHeight - 188,
+	// 	width: 210,
+	// 	height: 34,
+	// 	color: rgb(1, 0, 0)
+	// });
+	await drawImage(316, 188, signatureFile);
+	drawText(314, 248, fullname);
+	drawText(314, 306, title);
+	drawText(314, 364, company);
+	drawText(314, 422, email);
+	drawText(314, 480, today);
+	drawText(314, 538, githubUsername);
+
+	await writeFile(outFile, await pdfDoc.save());
+
+	return outFile;
 }
