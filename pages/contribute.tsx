@@ -59,7 +59,7 @@ function ContributeInfo({ claInfo, onSign, user }: ContributeInfoParams) {
 
 function DownloadSignedCLA() {
 	return (
-		<div className='p-4 mb-10 text-center rounded-xl bg-opacity-25 bg-black'>
+		<div className='px-12 py-2 mb-10 text-center rounded-xl bg-opacity-25 bg-black'>
 			<p className='my-10'>Thank you for signing the Contributor License Agreement! You can download your signed PDF below:</p>
 			<p className='my-10'>
 				<a className='button' href='/api/cla/download' target='_blank'>Download Your Signed CLA</a>
