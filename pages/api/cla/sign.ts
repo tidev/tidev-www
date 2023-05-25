@@ -1,5 +1,5 @@
 import { authOptions } from '../auth/[...nextauth]';
-import { CLA_VERISON, createPDF, getCLABucket, PDFData, uploadFile } from '../../../utils/cla';
+import { CLA_VERISON, createPDF, getCLABucket, CreatePDFData } from '../../../utils/cla';
 import Formidable from 'formidable';
 import { getServerSession } from 'next-auth';
 import { join } from 'node:path';
@@ -62,7 +62,7 @@ export default async function handler(
 
 		const now = new Date();
 		const today = `${now.getMonth() + 1}/${now.getDate()}/${now.getFullYear()}`;
-		const data: PDFData = {
+		const data: CreatePDFData = {
 			fullname: getField('fullname'),
 			title: getField('title'),
 			company: getField('company'),
@@ -82,18 +82,17 @@ export default async function handler(
 		const bucket = getCLABucket();
 		const destFilename = `${data.githubUsername[0]}/${data.githubUsername}`;
 
-		const pdfExists = await bucket.file(`${destFilename}.pdf`).exists();
-		const jsonExists = await bucket.file(`${destFilename}.json`).exists();
+		const [pdfExists] = await bucket.file(`${destFilename}.pdf`).exists();
+		const [jsonExists] = await bucket.file(`${destFilename}.json`).exists();
 		if (pdfExists || jsonExists) {
-			throw new Error('CLA already exists');
+			throw new Error('CLA already signed');
 		}
 
 		// upload pdf
 		await bucket.upload(pdfFile, { destination: `${destFilename}.pdf` });
 		await unlink(pdfFile);
 
-		const metaFile = join(tmpdir(), `${data.githubUsername}.json`);
-		await writeFile(metaFile, JSON.stringify({
+		const claInfo = {
 			username: data.githubUsername,
 			name: data.fullname,
 			title: data.title,
@@ -101,13 +100,21 @@ export default async function handler(
 			email: data.email,
 			date: today,
 			claVersion: CLA_VERISON
-		}, null, 2), 'utf-8');
+		};
+
+		const metaFile = join(tmpdir(), `${data.githubUsername}.json`);
+		await writeFile(metaFile, JSON.stringify(claInfo, null, 2), 'utf-8');
 		await bucket.upload(metaFile, { destination: `${destFilename}.json` });
 		await unlink(metaFile);
 
-		res.status(200).json({ message: 'Success' })
-	} catch (err) {
+		res.status(200).json({
+			signed: true,
+			...claInfo
+		});
+	} catch (err: unknown) {
 		console.log(err);
-		res.status(400).json({ message: 'Bad Request'})
+		res.status(400).json({
+			message: err instanceof Error && err.message || 'Bad Request'
+		});
 	}
 }

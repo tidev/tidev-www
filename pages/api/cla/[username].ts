@@ -1,14 +1,11 @@
-import { getServerSession } from 'next-auth/next';
-import { authOptions } from '../auth/[...nextauth]';
-import type { NextApiRequest, NextApiResponse } from "next"
-import { Storage } from '@google-cloud/storage';
+import type { NextApiRequest, NextApiResponse } from 'next';
 import { checkCLA } from '../../../utils/cla';
 
 export default async function handler(
 	req: NextApiRequest,
 	res: NextApiResponse
 ) {
-	if (req.headers.authorization !== 'Bearer secret') {
+	if (req.headers.authorization !== process.env.CLA_CHECK_SECRET) {
 		res.status(403).json({ error: 'Forbidden' });
 		return;
 	}

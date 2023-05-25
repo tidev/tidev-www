@@ -1,10 +1,9 @@
 import Link from 'next/link';
-import { useEffect, useRef, useState, MutableRefObject } from 'react';
+import { useEffect, useRef, useState, MutableRefObject, MouseEvent } from 'react';
 import { useSession, signIn } from 'next-auth/react';
 import * as pdfjs from 'pdfjs-dist';
 import { PDFDocument, StandardFonts } from 'pdf-lib';
 import type { CLAInfo } from '../utils/cla';
-// import type { Session } from 'next-auth';
 import type { ExtendedProfile } from './api/auth/[...nextauth]';
 import SignatureCanvas from 'react-signature-canvas';
 import { Hurricane } from 'next/font/google';
@@ -30,29 +29,30 @@ export default function CLA() {
 	useEffect(() => {
 		fetch('/api/cla')
 			.then(res => res.json())
-			.then((data: CLASignedInfo) => {
-				// setCLAInfo(data);
-			})
+			.then((data: CLASignedInfo) => setCLAInfo(data))
 			.catch(console.error);
 	}, []);
 
 	const user = status === 'authenticated' && session?.user ? session.user as ExtendedProfile : null;
-	return <ContributeInfo claInfo={claInfo} user={user}/>;
+	return <ContributeInfo claInfo={claInfo} onSign={setCLAInfo} user={user}/>;
 }
+
+type OnSignCallback = (claInfo: CLASignedInfo | null) => void;
 
 interface ContributeInfoParams {
 	claInfo: CLASignedInfo | null;
+	onSign: OnSignCallback;
 	user: ExtendedProfile | null;
 }
 
-function ContributeInfo({ claInfo, user }: ContributeInfoParams) {
-	// user = null;
+function ContributeInfo({ claInfo, onSign, user }: ContributeInfoParams) {
+	// user = null; // uncomment to test not logged in
 	return (
 		<div className='md:w-3/4 w-full mx-auto'>
 			{claInfo?.signed && <DownloadSignedCLA/>}
 			<InterestedInContributing/>
 			<ContributingCode/>
-			{claInfo?.signed !== true && <ShowCLAForm user={user}/>}
+			{claInfo?.signed !== true && <ShowCLAForm onSign={onSign} user={user}/>}
 		</div>
 	);
 }
@@ -151,7 +151,7 @@ function ContributingCode() {
 	);
 }
 
-function ShowCLAForm({ user }: { user: ExtendedProfile | null }) {
+function ShowCLAForm({ onSign, user }: { onSign: OnSignCallback, user: ExtendedProfile | null }) {
 	const [pdfDoc, setPDFDoc] = useState<PDFDocument | null>(null);
 	const [pdfPages, setPDFPages] = useState<pdfjs.PDFPageProxy[] | null>(null);
 
@@ -180,7 +180,7 @@ function ShowCLAForm({ user }: { user: ExtendedProfile | null }) {
 			<p className='mb-10'>Please carefully read the agreement. On the last page, login into GitHub, fill out your information, sign, and submit.</p>
 			{pdfDoc && pdfPages?.map((page, i, arr) => {
 				if (i + 1 === arr.length) {
-					return <PDFSignaturePage key={`page_${i}`} pageIdx={i} page={page} pdfDoc={pdfDoc} user={user} />;
+					return <PDFSignaturePage key={`page_${i}`} onSign={onSign} pageIdx={i} page={page} pdfDoc={pdfDoc} user={user} />;
 				}
 				return <PDFPage key={`page_${i}`} pageIdx={i} page={page}/>;
 			})}
@@ -194,8 +194,9 @@ interface PDFPageParams {
 }
 
 interface PDFSignaturePageParams extends PDFPageParams {
-	user?: ExtendedProfile | null;
+	onSign: OnSignCallback;
 	pdfDoc: PDFDocument;
+	user?: ExtendedProfile | null;
 }
 
 async function drawPdf(
@@ -253,7 +254,12 @@ function PDFPage({ page }: PDFPageParams) {
 	);
 }
 
-function PDFSignaturePage({ page, pageIdx, pdfDoc, user }: PDFSignaturePageParams) {
+interface AlertMessage {
+	message: string;
+	type: 'info' | 'error';
+}
+
+function PDFSignaturePage({ onSign, page, pageIdx, pdfDoc, user }: PDFSignaturePageParams) {
 	const canvasRef = useRef<HTMLCanvasElement | null>(null);
 	const renderTaskRef = useRef<pdfjs.RenderTask | null>(null);
 	const formRef = useRef<HTMLFormElement | null>(null);
@@ -264,7 +270,8 @@ function PDFSignaturePage({ page, pageIdx, pdfDoc, user }: PDFSignaturePageParam
 		email: user?.email || ''
 	});
 	const [sig, setSig] = useState<Signature | null>(null);
-	const [showModal, setShowModal] = useState(false);
+	const [showAlertModal, setShowAlertModal] = useState<AlertMessage | null>(null);
+	const [showSigModal, setShowSigModal] = useState(false);
 	const scrolledRef = useRef(false);
 	const isSigned = (sig: Signature | null) => !!(sig?.kind && sig.image && sig.trimmed);
 	const isFullNameValid = () => !!formData.fullname.trim();
@@ -273,6 +280,7 @@ function PDFSignaturePage({ page, pageIdx, pdfDoc, user }: PDFSignaturePageParam
 	const [claSignatureErrorClass, setCLASignatureErrorClass] = useState('');
 
 	const onSave = (sig: Signature) => {
+		setShowSigModal(false);
 		setSig(sig);
 		setCLASignatureErrorClass(isSigned(sig) ? '' : 'cla-invalid');
 	};
@@ -340,11 +348,14 @@ function PDFSignaturePage({ page, pageIdx, pdfDoc, user }: PDFSignaturePageParam
 		}
 	}, []);
 
-	const submitForm = (event: React.FormEvent<HTMLInputElement>) => {
-		event.preventDefault();
+	const submitForm = (evt: MouseEvent<HTMLButtonElement>) => {
+		evt.preventDefault();
 
 		if (!isValid() || !sig?.trimmed) {
-			alert('Form is invalid!');
+			setShowAlertModal({
+				type: 'info',
+				message: 'Please sign, enter your full name, and email address.'
+			});
 			return;
 		}
 
@@ -366,12 +377,20 @@ function PDFSignaturePage({ page, pageIdx, pdfDoc, user }: PDFSignaturePageParam
 			method: 'POST',
 			body: fd
 		})
-			.then(res => {
-				console.log('SUCCESS!');
+			.then(async res => {
+				if (!res.ok) {
+					throw new Error((await res.json()).message);
+				}
+				onSign(await res.json());
+				window.scrollTo({
+					behavior: 'smooth',
+					top: 0
+				});
 			})
-			.catch(err => {
-				console.log('ERROR!', err);
-			});
+			.catch(err => setShowAlertModal({
+				type: 'error',
+				message: `Error: ${err.message}`
+			}));
 	};
 
 	return (
@@ -380,7 +399,7 @@ function PDFSignaturePage({ page, pageIdx, pdfDoc, user }: PDFSignaturePageParam
 				<form className="cla-form" ref={formRef}>
 					<div
 						className={`cla-signature ${claSignatureErrorClass} ${sig?.trimmed ? 'justify-start' : 'justify-center'}`}
-						onClick={() => setShowModal(true)}
+						onClick={() => setShowSigModal(true)}
 						style={{ top: '240px' }}>
 						{sig?.trimmed
 							? <img src={sig.trimmed}/>
@@ -420,12 +439,18 @@ function PDFSignaturePage({ page, pageIdx, pdfDoc, user }: PDFSignaturePageParam
 						<button className='button' onClick={submitForm} disabled={!isValid()}>Submit</button>
 					</div>
 				</form>
-				{showModal &&
+				{showSigModal &&
 					<SignatureModal
 						fullname={formData.fullname}
-						setShowModal={setShowModal}
-						sig={sig}
+						onCancel={() => setShowSigModal(false)}
 						onSave={onSave}
+						sig={sig}
+						/>
+				}
+				{showAlertModal &&
+					<AlertModal
+						data={showAlertModal}
+						onClose={() => setShowAlertModal(null)}
 						/>
 				}
 			</> : <>
@@ -452,14 +477,14 @@ interface Signature {
 
 function SignatureModal({
 	fullname,
+	onCancel,
 	onSave,
-	sig,
-	setShowModal
+	sig
 }: {
 	fullname: string;
+	onCancel: () => void;
 	onSave: (sig: Signature) => void;
 	sig: Signature | null;
-	setShowModal: (showModal: boolean) => void;
 }) {
 	const [activeTab, setActiveTab] = useState<Signature['kind']>(sig?.kind || 'sign');
 	const [sigText, setSigText] = useState(sig?.kind === 'type' && sig.text !== undefined ? sig.text : fullname);
@@ -492,9 +517,7 @@ function SignatureModal({
 			}
 		}
 
-		setShowModal(false);
-
-		console.log(image);
+		// console.log(image); // log data url containing png image
 
 		onSave({
 			kind,
@@ -586,13 +609,46 @@ function SignatureModal({
 							<button
 								className="button-secondary mr-12 ml-auto"
 								type="button"
-								onClick={() => setShowModal(false)}
+								onClick={onCancel}
 								>Cancel</button>
 							<button
 								className="button"
 								type="button"
 								onClick={save}
 								>Save</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div className="cla-modal-bg"></div>
+		</>
+	);
+}
+
+function AlertModal({
+	data,
+	onClose
+}: {
+	data: AlertMessage;
+	onClose: () => void;
+}) {
+	return (
+		<>
+			<div className="cla-modal">
+				<div className="cla-modal-squeeze">
+					<div className="cla-modal-win pt-6">
+						{data.message.split(/\n\n/).map((chunk, i) => {
+							return <p className="px-10 my-2" key={`chunk_${i}`}>{chunk}</p>
+						})}
+						{data.type === 'error' &&
+							<p className="px-10 my-2">Hit us up on <a href="https://tidev.slack.com/" target="_blank">Slack</a> for help!</p>
+						}
+						<div className="flex items-center p-6 rounded-b">
+							<button
+								className="button mx-auto"
+								type="button"
+								onClick={onClose}
+								>OK</button>
 						</div>
 					</div>
 				</div>
