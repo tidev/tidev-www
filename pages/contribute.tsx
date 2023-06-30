@@ -1,13 +1,14 @@
+import { Hurricane } from 'next/font/google';
 import Link from 'next/link';
-import { useEffect, useRef, useState, MutableRefObject, MouseEvent } from 'react';
-import { useSession, signIn } from 'next-auth/react';
-import * as pdfjs from 'pdfjs-dist';
 import { PDFDocument, StandardFonts } from 'pdf-lib';
+import * as pdfjs from 'pdfjs-dist';
+import ReactSignatureCanvas from 'react-signature-canvas';
+import SignatureCanvas from 'react-signature-canvas';
+import { signIn, useSession } from 'next-auth/react';
+import { useEffect, useRef, useState } from 'react';
 import type { CLAInfo } from '../utils/cla';
 import type { ExtendedProfile } from './api/auth/[...nextauth]';
-import SignatureCanvas from 'react-signature-canvas';
-import { Hurricane } from 'next/font/google';
-import ReactSignatureCanvas from 'react-signature-canvas';
+import type { MouseEvent, MutableRefObject } from 'react';
 
 const CONTRIBUTOR_PDF = 'CONTRIBUTOR_CLA_1.2.pdf';
 
@@ -29,7 +30,7 @@ export default function CLA() {
 	useEffect(() => {
 		fetch('/api/cla')
 			.then(res => res.json())
-			.then((data: CLASignedInfo) => setCLAInfo(data))
+			.then((data: CLASignedInfo) => setCLAInfo(data)) // comment out to test not signed
 			.catch(console.error);
 	}, []);
 
@@ -269,6 +270,7 @@ function PDFSignaturePage({ onSign, page, pageIdx, pdfDoc, user }: PDFSignatureP
 		company: user?.company || '',
 		email: user?.email || ''
 	});
+	const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 	const [sig, setSig] = useState<Signature | null>(null);
 	const [showAlertModal, setShowAlertModal] = useState<AlertMessage | null>(null);
 	const [showSigModal, setShowSigModal] = useState(false);
@@ -373,6 +375,8 @@ function PDFSignaturePage({ onSign, page, pageIdx, pdfDoc, user }: PDFSignatureP
 		fd.set('email', formData.email);
 		fd.set('signature', sigBlob, 'sig.png');
 
+		setIsSubmitting(true);
+
 		fetch('/api/cla/sign', {
 			method: 'POST',
 			body: fd
@@ -387,10 +391,13 @@ function PDFSignaturePage({ onSign, page, pageIdx, pdfDoc, user }: PDFSignatureP
 					top: 0
 				});
 			})
-			.catch(err => setShowAlertModal({
-				type: 'error',
-				message: `Error: ${err.message}`
-			}));
+			.catch(err => {
+				setIsSubmitting(false);
+				setShowAlertModal({
+					type: 'error',
+					message: `Error: ${err.message}`
+				});
+			});
 	};
 
 	return (
@@ -436,7 +443,12 @@ function PDFSignaturePage({ onSign, page, pageIdx, pdfDoc, user }: PDFSignatureP
 						value={formData.email}
 						style={{ top: '650px' }}/>
 					<div className="cla-submit" style={{ top: '950px' }}>
-						<button className='button' onClick={submitForm} disabled={!isValid()}>Submit</button>
+						<button className='button' onClick={submitForm} disabled={isSubmitting || !isValid()}>
+							{isSubmitting ? <>
+								Processing
+								<img className="loading" src="/loading.png" />
+							</> : 'Submit'}
+						</button>
 					</div>
 				</form>
 				{showSigModal &&
@@ -641,7 +653,7 @@ function AlertModal({
 							return <p className="px-10 my-2" key={`chunk_${i}`}>{chunk}</p>
 						})}
 						{data.type === 'error' &&
-							<p className="px-10 my-2">Hit us up on <a href="https://tidev.slack.com/" target="_blank">Slack</a> for help!</p>
+							<p className="px-10 my-2">Hit us up on <a href="https://tidev.slack.com/" target="_blank">Slack</a> or email <a href="mailto:cla@tidev.io">cla@tidev.io</a> for help!</p>
 						}
 						<div className="flex items-center p-6 rounded-b">
 							<button

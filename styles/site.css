@@ -59,6 +59,10 @@ p strong {
     @apply bg-gray-500 focus:outline-none;
 }
 
+.button .loading {
+    @apply ml-2 items-center;
+}
+
 .button-secondary {
     @apply uppercase font-semibold text-blue-500 dark:text-blue-700;
 }

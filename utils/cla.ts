@@ -1,7 +1,8 @@
+import { default as OpenPdfSign } from 'open-pdf-sign';
 import { join } from 'node:path';
-import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
-import { readFile, writeFile } from 'node:fs/promises';
-// import signer from 'node-signpdf';
+import { PDFDocument, /* rgb, */ StandardFonts } from 'pdf-lib';
+import { readFile, unlink, writeFile } from 'node:fs/promises';
+import { resolve } from 'node:path';
 import { Storage } from '@google-cloud/storage';
 import { tmpdir } from 'node:os';
 
@@ -106,7 +107,6 @@ export async function createPDF({
 	const pages = pdfDoc.getPages();
 	const page = pages[4];
 	const { height: pageHeight } = page.getSize();
-	const outFile = join(tmpdir(), `${githubUsername}.pdf`);
 
 	const drawText = (x: number, y: number, str: string) => {
 		page.drawText(str, {
@@ -170,11 +170,39 @@ export async function createPDF({
 	drawText(314, 480, today);
 	drawText(314, 538, githubUsername);
 
-	// const p12cert = await readFile('public/tidev.p12');
+	pdfDoc.setTitle('TiDev Contributor License Agreement');
+	pdfDoc.setAuthor('TiDev, Inc.');
+	pdfDoc.setCreator('https://tidev.io');
+	pdfDoc.setModificationDate(new Date());
 
 	const unsignedBytes = await pdfDoc.save();
-	// const signedBytes = signer.sign(unsignedBytes, p12cert);
-	await writeFile(outFile, unsignedBytes); // signedBytes
+	const unsignedFile = join(tmpdir(), `${githubUsername}.unsigned.pdf`);
+	const signedFile = join(tmpdir(), `${githubUsername}.pdf`);
+	// const signedFile = `/home/chris/projects/titanium/tidev/www/${githubUsername}.pdf`;
 
-	return outFile;
+	try {
+		await writeFile(unsignedFile, unsignedBytes);
+
+		await OpenPdfSign.sign(
+			`-i ${unsignedFile}`,
+			`-o ${signedFile}`,
+			`-k ${resolve('../certs/tidev.io.key')}`,
+			`-c ${resolve('../certs/tidev.io.crt')}`,
+			'--no-hint',
+			'--baseline-lt',
+			'--timestamp',
+			'--tsa http://timestamp.digicert.com',
+			'--page -1',
+			`--image ${signatureFile}`,
+			'--top 22.5',
+			'--left 3.5',
+			'--width 14'
+		);
+	} finally {
+		await unlink(unsignedFile);
+	}
+
+	// throw new Error('done!');
+
+	return signedFile;
 }

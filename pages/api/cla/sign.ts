@@ -1,6 +1,6 @@
 import { authOptions } from '../auth/[...nextauth]';
 import { CLA_VERISON, createPDF, getCLABucket, CreatePDFData } from '../../../utils/cla';
-import Formidable from 'formidable';
+import * as Formidable from 'formidable';
 import { getServerSession } from 'next-auth';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
@@ -33,6 +33,7 @@ export default async function handler(
 	}
 
 	const user = session.user as ExtendedProfile;
+	let filesToCleanup: Formidable.Files | undefined;
 
 	try {
 		if (!req.headers["content-type"]?.startsWith("multipart/form-data")) {
@@ -52,11 +53,15 @@ export default async function handler(
 				resolve({ fields, files });
 			});
 		});
+		filesToCleanup = files;
 
-		const signatureFile = !Array.isArray(files.signature) && files.signature.filepath || '';
+		const signatureFile = (Array.isArray(files.signature) ? files.signature[0] : files.signature)?.filepath || '';
 
 		const getField = (name: string) => {
-			const value = fields[name];
+			let value = fields[name];
+			if (Array.isArray(value)) {
+				value = value[0];
+			}
 			return typeof value === 'string' ? value.trim() : '';
 		};
 
@@ -76,17 +81,17 @@ export default async function handler(
 			throw new Error('Missing user info');
 		}
 
-		const pdfFile = await createPDF(data);
-		// console.log({ pdfFile });
+		const destFilename = `${data.githubUsername[0]}/${data.githubUsername}${process.env.NODE_ENV === 'development' ? '.test' : ''}`;
 
 		const bucket = getCLABucket();
-		const destFilename = `${data.githubUsername[0]}/${data.githubUsername}`;
-
 		const [pdfExists] = await bucket.file(`${destFilename}.pdf`).exists();
 		const [jsonExists] = await bucket.file(`${destFilename}.json`).exists();
 		if (pdfExists || jsonExists) {
 			throw new Error('CLA already signed');
 		}
+
+		const pdfFile = await createPDF(data);
+		// console.log({ pdfFile });
 
 		// upload pdf
 		await bucket.upload(pdfFile, { destination: `${destFilename}.pdf` });
@@ -116,5 +121,17 @@ export default async function handler(
 		res.status(400).json({
 			message: err instanceof Error && err.message || 'Bad Request'
 		});
+	} finally {
+		if (filesToCleanup) {
+			for (const file of Object.values(filesToCleanup)) {
+				if (Array.isArray(file)) {
+					for (const { filepath } of file) {
+						await unlink(filepath);
+					}
+				} else {
+					await unlink(file.filepath);
+				}
+			}
+		}
 	}
 }
