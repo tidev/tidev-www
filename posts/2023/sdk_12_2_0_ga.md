@@ -23,10 +23,6 @@ For a more detailed overview, known issues and closed tickets, see the release n
 2. Run `titanium sdk install 12.2.0.GA`
 3. Set `<sdk-version>12.2.0.GA</sdk-version>` in your `tiapp.xml`
 
-## Rollback
-
-Execute `titanium sdk install latest --default` to rollback.
-
 ## Report Bugs
 
 As this is a Release Candidate Version, it's not meant to be used for production. So please test it on your apps and give feedback so we will have a **bug-free/working GA** at the end. If you run into any issues that seem related to the updates, please report them on [GitHub](https://github.com/tidev/titanium_mobile/issues).
