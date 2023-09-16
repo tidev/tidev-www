@@ -12,6 +12,12 @@ import type { MouseEvent, MutableRefObject } from 'react';
 
 const CONTRIBUTOR_PDF = 'CONTRIBUTOR_CLA_1.2.pdf';
 
+// set to `true` to show `sign into github`
+const SIMULATE_NOT_AUTHENTICATED = false;
+
+// set to `true` to show form to sign
+const SIMULATE_NOT_SIGNED = false;
+
 const signatureFont = Hurricane({
 	subsets: ['latin'],
 	weight: ['400']
@@ -30,7 +36,11 @@ export default function CLA() {
 	useEffect(() => {
 		fetch('/api/cla')
 			.then(res => res.json())
-			.then((data: CLASignedInfo) => setCLAInfo(data)) // comment out to test not signed
+			.then((data: CLASignedInfo) => {
+				if (!SIMULATE_NOT_SIGNED) {
+					return setCLAInfo(data);
+				}
+			})
 			.catch(console.error);
 	}, []);
 
@@ -47,7 +57,10 @@ interface ContributeInfoParams {
 }
 
 function ContributeInfo({ claInfo, onSign, user }: ContributeInfoParams) {
-	// user = null; // uncomment to test not logged in
+	if (SIMULATE_NOT_AUTHENTICATED) {
+		user = null;
+	}
+
 	return (
 		<div className='md:w-3/4 w-full mx-auto'>
 			{claInfo?.signed && <DownloadSignedCLA/>}

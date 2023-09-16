@@ -10,6 +10,8 @@ export default async function handler(
 		return;
 	}
 
+	// TODO: if username is a pull request id, then get list of commits and check that every committer has signed!
+
 	let { username } = req.query;
 	if (!username || typeof username !== 'string') {
 		res.status(400).json({ error: 'Bad request' });
