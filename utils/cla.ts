@@ -141,6 +141,15 @@ export async function createPDF({
 		});
 	};
 
+	/*
+	 * The `page.drawRectangle()` calls below render a red rectangle used for
+	 * manually positioning the signature. The signature image has a
+	 * transparent background making it impossible to align.
+	 *
+	 * Should the template PDF ever change, say a new line is added, uncomment
+	 * and position until perfect, then update the `drawImage()` call.
+	 */
+
 	// page.drawRectangle({
 	// 	x: 80,
 	// 	y: pageHeight - 188,
@@ -148,6 +157,7 @@ export async function createPDF({
 	// 	height: 24,
 	// 	color: rgb(1, 0, 0)
 	// });
+
 	await drawImage(80, 188, 'utils/JoshSignature.png');
 	drawText(80, 248, 'Joshua Lambert');
 	drawText(80, 306, 'Board Chairman');
@@ -162,6 +172,7 @@ export async function createPDF({
 	// 	height: 34,
 	// 	color: rgb(1, 0, 0)
 	// });
+
 	await drawImage(316, 188, signatureFile);
 	drawText(314, 248, fullname);
 	drawText(314, 306, title);
