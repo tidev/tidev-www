@@ -35,7 +35,7 @@
         "@types/formidable": "3.4.3",
         "@types/lodash": "4.14.198",
         "@types/markdown-it": "13.0.1",
-        "@types/node": "20.6.1",
+        "@types/node": "20.6.2",
         "@types/react": "18.2.21",
         "@types/react-pdf": "6.2.0",
         "@types/react-signature-canvas": "1.0.2",

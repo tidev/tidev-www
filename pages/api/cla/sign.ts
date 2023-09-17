@@ -58,10 +58,8 @@ export default async function handler(
 		const signatureFile = (Array.isArray(files.signature) ? files.signature[0] : files.signature)?.filepath || '';
 
 		const getField = (name: string) => {
-			let value = fields[name];
-			if (Array.isArray(value)) {
-				value = value[0];
-			}
+			const fieldValue = fields[name];
+			const value = Array.isArray(fieldValue) ? fieldValue[0] : fieldValue;
 			return typeof value === 'string' ? value.trim() : '';
 		};
 
@@ -128,8 +126,6 @@ export default async function handler(
 					for (const { filepath } of file) {
 						await unlink(filepath);
 					}
-				} else {
-					await unlink(file.filepath);
 				}
 			}
 		}

@@ -1,4 +1,4 @@
-import { default as OpenPdfSign } from 'open-pdf-sign';
+import OpenPdfSign from 'open-pdf-sign';
 import { join } from 'node:path';
 import { PDFDocument, /* rgb, */ StandardFonts } from 'pdf-lib';
 import { readFile, unlink, writeFile } from 'node:fs/promises';
@@ -178,7 +178,6 @@ export async function createPDF({
 	const unsignedBytes = await pdfDoc.save();
 	const unsignedFile = join(tmpdir(), `${githubUsername}.unsigned.pdf`);
 	const signedFile = join(tmpdir(), `${githubUsername}.pdf`);
-	// const signedFile = `/home/chris/projects/titanium/tidev/www/${githubUsername}.pdf`;
 
 	try {
 		await writeFile(unsignedFile, unsignedBytes);
@@ -201,8 +200,6 @@ export async function createPDF({
 	} finally {
 		await unlink(unsignedFile);
 	}
-
-	// throw new Error('done!');
 
 	return signedFile;
 }
