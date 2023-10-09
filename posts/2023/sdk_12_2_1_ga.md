@@ -8,10 +8,10 @@ teaser: 'Fix Android and iOS issues related to 12.2.0.GA'
 
 The next stable version of the Titanium SDK is now is available: <b>12.2.1.GA</b>. Titanium SDK 12.2.1 is a patch release of the SDK,
 addressing Android and iOS issues found in 12.2.0.GA:
-* Android: camera with overlay fix
-* iOS: fix crash backgroundRepeat in XCode 15
-* iOS: fix crash when setting navTintColor
-* iOS: fix crash when using a VideoPlayer in e.g. a modal window
+* Android: Fix camera overlays
+* iOS: Fix crash when setting the `backgroundRepeat` property on iOS 17+
+* iOS: Fix crash when setting the `navTintColor` property on iOS 17+
+* iOS: Fix crash when using a `Ti.Media.VideoPlayer`, e.g. inside a modal window
 
 For a more detailed overview, known issues and closed tickets, see the release notes: [Titanium SDK 12.2.1.GA Release Note](https://titaniumsdk.com/guide/Titanium_SDK/Titanium_SDK_Release_Notes/Titanium_SDK_Release_Notes_12.x/Titanium_SDK_12.2.1.GA_Release_Note.html).
 
