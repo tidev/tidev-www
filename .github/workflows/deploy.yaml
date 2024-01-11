@@ -28,4 +28,4 @@ jobs:
         with:
           branch: 'main'
           git_remote_url: 'ssh://dokku@tidev.io:22/tidev.io'
-          ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
+          ssh_private_key: ${{ secrets.DO_SSH_PRIVATE_KEY }}
