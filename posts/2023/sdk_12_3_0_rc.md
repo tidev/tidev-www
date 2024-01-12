@@ -10,7 +10,7 @@ The next stable version of the Titanium SDK is now is available: <b>12.3.0.RC</b
   * General: Official support for Node.js 18 and 20
   * General: Module updates (e.g. hyperloop and ti.map)
   * iOS: Support multi-scene applications (e.g. CarPlay and visionOS)
-  * Android: New camera handling using the official `CameraX` Jetpack library 
+  * Android: New camera handling using the official `CameraX` Jetpack library when you use a camera with an overlay. Use `useCameraX:true` to enable the new features (see the documentation for more information).
 
 For a more detailed overview, known issues and closed issues, see the release notes: [Titanium SDK 12.3.0.RC Release Note](https://titaniumsdk.com/guide/Titanium_SDK/Titanium_SDK_Release_Notes/Titanium_SDK_Release_Notes_12.x/Titanium_SDK_12.3.0.RC_Release_Note.html).
 
