@@ -28,7 +28,7 @@ export default function Blog(props: InferGetStaticPropsType<typeof getStaticProp
                             </h2>
                             <p className='text-sm text-gray-500'>{page.teaser}…</p>
                             <p className='pt-2 text-xs font-medium'>
-                                {page.author} · <span className='mx-1'>{page.date}</span>
+                                {page.author} · <span className='mx-1'>{new Date(page.date ?? new Date()).toLocaleDateString('en')}</span>
                             </p>
                         </div>
                     ))}

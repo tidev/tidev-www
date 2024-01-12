@@ -40,7 +40,7 @@ export default function BlogPost({ page }: InferGetStaticPropsType<typeof getSta
                             <span>{data.category}</span>
                         </span>
                         <p className='pt-2 text-xs font-medium'>
-                            {data.date}
+                            {new Date(data.date).toLocaleDateString('en')}
                             <br />
                             {data.author}
                         </p>
