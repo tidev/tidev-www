@@ -1,0 +1,8 @@
+.eslintrc.json
+.git
+.github
+.gitignore
+Dockerfile
+LICENSE
+tailwind.config.js
+tsconfig.json
