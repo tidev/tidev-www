@@ -26,9 +26,9 @@ export default function Blog(props: InferGetStaticPropsType<typeof getStaticProp
                                     {page.title}
                                 </Link>
                             </h2>
-                            <p className='text-sm'>{page.teaser}…</p>
-                            <p className='pt-2 text-xs font-medium text-gray-500'>
-                                {page.author} · <span className='mx-1'>{page.date}</span>
+                            <p className='text-sm text-gray-500'>{page.teaser}…</p>
+                            <p className='pt-2 text-xs font-medium'>
+                                {page.author} · <span className='mx-1'>{new Date(page.date ?? new Date()).toLocaleDateString('en')}</span>
                             </p>
                         </div>
                     ))}

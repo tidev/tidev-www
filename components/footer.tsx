@@ -32,7 +32,7 @@ export default function Footer() {
                         </svg>
                     </Link>
                 </div>
-                <p className='mt-8 text-sm leading-6 text-center text-gray-400 dark:text-gray-200'>© 2023 TiDev, Inc. - 38 Court Square West, Centreville, AL 35042</p>
+                <p className='mt-8 text-sm leading-6 text-center text-gray-400 dark:text-gray-200'>© {new Date().getFullYear()} TiDev, Inc. - 38 Court Square West, Centreville, AL 35042</p>
             </div>
         </section>
     );
