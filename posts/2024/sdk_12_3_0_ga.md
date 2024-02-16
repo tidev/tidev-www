@@ -6,7 +6,7 @@ author: 'Hans Knöchel'
 teaser: 'Support for Node.js 20, Apple Vision Pro and new Android camera handling'
 ---
 
-The next preview version of the Titanium SDK is now is available: <b>12.3.0.GA</b>. Titanium SDK 12.3.0 is a minor release of the SDK, adding new features and fixing existing bugs:
+The next stable version of the Titanium SDK is now available: <b>12.3.0.GA</b>. Titanium SDK 12.3.0 is a minor release of the SDK, adding new features and fixing existing bugs:
   * General: Official support for Node.js 18 and 20
   * General: Module updates (e.g. hyperloop and ti.map)
   * iOS: Support multi-scene applications (e.g. CarPlay and visionOS)
