@@ -3,7 +3,8 @@ FROM node:20-alpine
 WORKDIR /app
 COPY . /app
 
-RUN corepack enable && \
+RUN apk add --no-cache openjdk8-jre && \
+	corepack enable && \
 	pnpm install --frozen-lockfile && \
 	pnpm run build
 
