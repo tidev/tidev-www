@@ -6,29 +6,33 @@ import { globby } from 'globby';
 import { ParsedUrlQuery } from 'querystring';
 
 export interface PageMeta {
-	author?: string,
-	category?: string,
-	date?: string,
-	slug?: string,
-	teaser?: string,
-	title?: string
+	author?: string;
+	category?: string;
+	date?: string;
+	slug?: string;
+	teaser: string;
+	title?: string;
 }
 
 export interface Page {
-	content?: string,
-	data?: {}
+	content: string;
+	data: PageMeta;
 }
 
 export interface IParams extends ParsedUrlQuery {
-    slug: string
+    slug: string;
 }
 
 export async function findContent(type: string): Promise<PageMeta[]> {
 	const files = await globby(`./${type}/**/*.md`);
 	return files.map((file: string): PageMeta => {
 		const { name: slug } = path.parse(file);
-		const { data } = matter(fs.readFileSync(file, 'utf-8'));
-		return { slug, ...data };
+		const { content, data } = matter(fs.readFileSync(file, 'utf-8'));
+		return {
+			slug,
+			teaser: content.slice(0, 140).replace(/\n/g, ' ') + '...',
+			...data
+		};
 	});
 }
 
@@ -46,7 +50,7 @@ export async function loadContent(type: string, slug: string): Promise<Page | un
 
 			const html = md({
 				html: true,
-				linkify: true
+				linkify: false
 			}).render(content);
 
 			return {

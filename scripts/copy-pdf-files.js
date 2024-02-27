@@ -1,8 +1,8 @@
 const { copyFileSync, readdirSync } = require('fs');
 
 copyFileSync(
-	'node_modules/pdfjs-dist/build/pdf.worker.min.js',
-	'public/pdf.worker.js'
+	'node_modules/pdfjs-dist/build/pdf.worker.min.mjs',
+	'public/pdf.worker.mjs'
 );
 
 const fonts = readdirSync('node_modules/pdfjs-dist/standard_fonts');

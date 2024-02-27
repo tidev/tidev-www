@@ -1,18 +1,20 @@
 {
     "name": "tidev.io",
-    "version": "2.1.0",
+    "version": "3.0.0",
     "private": true,
     "scripts": {
-        "build": "pnpm copy-pdf-files && pnpm run build:css && next build",
-        "build:css": "tailwindcss -m -i styles/site.css -o public/styles/site.css",
+        "build": "pnpm copy-pdf-files && next build",
         "copy-pdf-files": "node scripts/copy-pdf-files",
-        "dev": "pnpm copy-pdf-files && concurrently -k \"pnpm dev:css\" \"next dev\"",
-        "dev:css": "tailwindcss -w -i styles/site.css -o public/styles/site.css",
-        "start": "next start",
-        "lint": "next lint"
+        "dev": "pnpm copy-pdf-files && next dev",
+        "lint": "next lint",
+        "start": "next start"
     },
     "dependencies": {
         "@google-cloud/storage": "7.7.0",
+        "@mdx-js/loader": "3.0.1",
+        "@mdx-js/react": "3.0.1",
+        "@next/mdx": "14.1.0",
+        "@types/mdx": "2.0.11",
         "formidable": "3.5.1",
         "fs-extra": "11.2.0",
         "globby": "14.0.1",
@@ -20,7 +22,6 @@
         "markdown-it": "14.0.0",
         "next": "14.1.0",
         "next-auth": "4.24.6",
-        "next-seo": "6.5.0",
         "open-pdf-sign": "0.1.7",
         "pdf-lib": "1.17.1",
         "pdfjs-dist": "4.0.379",
@@ -28,20 +29,23 @@
         "react": "18.2.0",
         "react-dom": "18.2.0",
         "react-signature-canvas": "1.0.6",
+        "rss": "1.2.2",
         "uuid": "9.0.1"
     },
     "devDependencies": {
         "@tailwindcss/typography": "0.5.10",
         "@types/formidable": "3.4.5",
+        "@types/fs-extra": "11.0.4",
         "@types/lodash": "4.14.202",
         "@types/markdown-it": "13.0.7",
         "@types/node": "20.11.20",
         "@types/react": "18.2.59",
+        "@types/react-dom": "18.2.19",
         "@types/react-pdf": "6.2.0",
         "@types/react-signature-canvas": "1.0.5",
+        "@types/rss": "0.0.32",
         "@types/uuid": "9.0.8",
         "autoprefixer": "10.4.17",
-        "concurrently": "8.2.2",
         "eslint": "8.57.0",
         "eslint-config-next": "14.1.0",
         "postcss": "8.4.35",
@@ -49,6 +53,6 @@
         "typescript": "5.3.3"
     },
     "engines": {
-        "node": ">=16"
+        "node": ">=20"
     }
 }
