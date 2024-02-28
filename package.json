@@ -10,7 +10,6 @@
         "start": "next start"
     },
     "dependencies": {
-        "@google-cloud/storage": "7.7.0",
         "@mdx-js/loader": "3.0.1",
         "@mdx-js/react": "3.0.1",
         "@next/mdx": "14.1.0",
@@ -38,8 +37,8 @@
         "@types/fs-extra": "11.0.4",
         "@types/lodash": "4.14.202",
         "@types/markdown-it": "13.0.7",
-        "@types/node": "20.11.20",
-        "@types/react": "18.2.59",
+        "@types/node": "20.11.21",
+        "@types/react": "18.2.60",
         "@types/react-dom": "18.2.19",
         "@types/react-pdf": "6.2.0",
         "@types/react-signature-canvas": "1.0.5",
