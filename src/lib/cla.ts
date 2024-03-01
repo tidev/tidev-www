@@ -6,20 +6,11 @@ import { dirname, join, resolve } from 'node:path';
 import { tmpdir } from 'node:os';
 import { CONTRIBUTOR_PDF } from './cla-constants';
 import signPDF from './cla-sign-pdf';
+import type { CLAInfo } from './cla-types';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 export const claDir = resolve(__dirname, '../../cla');
 export const certsDir = resolve(__dirname, '../../certs');
-
-interface CLAInfo {
-	username: string;
-	name: string;
-	title: string;
-	company: string,
-	email: string;
-	date: string;
-	claVersion: string;
-}
 
 interface CLACache {
 	[username: string]: {
@@ -172,7 +163,7 @@ export async function createPDF({
 		await signPDF({
 			unsignedFile,
 			signedFile,
-			keyFile: join(certsDir, 'tidev.io.key'),
+			keyFile: join(certsDir, 'tidev.io.rsa.pkcs1.key'),
 			certFile: join(certsDir, 'tidev.io.crt'),
 			signatureFile,
 			page: '-1',

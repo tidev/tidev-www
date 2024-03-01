@@ -1,6 +1,3 @@
-// set to `true` to show the CLA form
-export const CLA_ENABLED = true;
-
 // set to `true` to show `sign into github`
 export const SIMULATE_NOT_AUTHENTICATED = false;
 

@@ -3,7 +3,7 @@ import { CLA_VERISON } from '@/lib/cla-constants';
 import { claDir, createPDF, CreatePDFData } from '@/lib/cla';
 import { join } from 'node:path';
 import { existsSync } from 'node:fs';
-import { unlink, writeFile } from 'node:fs/promises';
+import { rename, unlink, writeFile } from 'node:fs/promises';
 import { getServerSession } from 'next-auth/next';
 import type { ExtendedProfile } from '@/lib/auth';
 import { tmpdir } from 'node:os';
@@ -57,7 +57,7 @@ export async function POST(req: Request) {
 		}
 
 		const pdfFile = await createPDF(data);
-		await writeFile(destPdf, pdfFile);
+		await rename(pdfFile, destPdf);
 
 		const claInfo = {
 			username: data.githubUsername,

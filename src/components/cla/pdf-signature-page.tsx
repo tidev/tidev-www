@@ -9,6 +9,7 @@ import type { ExtendedProfile } from '@/lib/auth';
 import type { PDFPageProxy, RenderTask } from 'pdfjs-dist';
 import type { MouseEvent } from 'react';
 import type { Signature } from '@/lib/cla-types';
+import type { OnSignCallback } from '@/lib/cla-types';
 
 interface PDFPageParams {
 	page: PDFPageProxy;
@@ -16,7 +17,7 @@ interface PDFPageParams {
 }
 
 interface PDFSignaturePageParams extends PDFPageParams {
-	// onSign: OnSignCallback;
+	onSign: OnSignCallback;
 	pdfDoc: PDFDocument;
 	user?: ExtendedProfile | null;
 }
@@ -26,7 +27,7 @@ interface AlertMessage {
 	type: 'info' | 'error';
 }
 
-export default function PDFSignaturePage({ /*onSign,*/ page, pageIdx, pdfDoc, user }: PDFSignaturePageParams) {
+export default function PDFSignaturePage({ onSign, page, pageIdx, pdfDoc, user }: PDFSignaturePageParams) {
 	const canvasRef = useRef<HTMLCanvasElement | null>(null);
 	const renderTaskRef = useRef<RenderTask | null>(null);
 	const formRef = useRef<HTMLFormElement | null>(null);
@@ -154,8 +155,9 @@ export default function PDFSignaturePage({ /*onSign,*/ page, pageIdx, pdfDoc, us
 				if (!res.ok) {
 					throw new Error((await res.json()).message);
 				}
-				console.log(await res.json());
-				// onSign(await res.json());
+				const claInfo = await res.json();
+				// console.log(claInfo);
+				onSign(claInfo);
 				window.scrollTo({
 					behavior: 'smooth',
 					top: 0

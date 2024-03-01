@@ -7,8 +7,9 @@ import { ExtendedProfile } from '@/lib/auth';
 import PDFPage from '@/components/cla/pdf-page';
 import PDFSignaturePage from '@/components/cla/pdf-signature-page';
 import type { PDFPageProxy } from 'pdfjs-dist';
+import type { OnSignCallback } from '@/lib/cla-types';
 
-export default function CLAForm({ user }: { user: ExtendedProfile | null }) {
+export default function CLAForm({ onSign, user }: { onSign: OnSignCallback, user: ExtendedProfile | null }) {
 	const [pdfDoc, setPDFDoc] = useState<PDFDocument | null>(null);
 	const [pdfPages, setPDFPages] = useState<PDFPageProxy[] | null>(null);
 
@@ -40,8 +41,7 @@ export default function CLAForm({ user }: { user: ExtendedProfile | null }) {
 			<p className='mb-10'>Please carefully read the agreement. On the last page, login into GitHub, fill out your information, sign, and submit.</p>
 			{pdfDoc && pdfPages?.map((page, i, arr) => {
 				if (i + 1 === arr.length) {
-					// onSign={onSign}
-					return <PDFSignaturePage key={`page_${i}`} pageIdx={i} page={page} pdfDoc={pdfDoc} user={user} />;
+					return <PDFSignaturePage onSign={onSign} key={`page_${i}`} pageIdx={i} page={page} pdfDoc={pdfDoc} user={user} />;
 				}
 				return <PDFPage key={`page_${i}`} pageIdx={i} page={page}/>;
 			})}
