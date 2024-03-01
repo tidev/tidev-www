@@ -1,17 +1,17 @@
-import OpenPdfSign from 'open-pdf-sign';
 import fs from 'fs-extra';
 import { fileURLToPath } from 'node:url';
 import { PDFDocument, /* rgb, */ StandardFonts } from 'pdf-lib';
 import { readFile, unlink, writeFile } from 'node:fs/promises';
 import { dirname, join, resolve } from 'node:path';
 import { tmpdir } from 'node:os';
+import { CONTRIBUTOR_PDF } from './cla-constants';
+import signPDF from './cla-sign-pdf';
 
-const CONTRIBUTOR_PDF = 'CONTRIBUTOR_CLA_1.2.pdf';
-export const CLA_VERISON = '1.2';
+const __dirname = dirname(fileURLToPath(import.meta.url));
+export const claDir = resolve(__dirname, '../../cla');
+export const certsDir = resolve(__dirname, '../../certs');
 
-const claDir = resolve(dirname(fileURLToPath(import.meta.url)), '../../cla');
-
-export type CLAInfo = {
+interface CLAInfo {
 	username: string;
 	name: string;
 	title: string;
@@ -19,7 +19,7 @@ export type CLAInfo = {
 	email: string;
 	date: string;
 	claVersion: string;
-};
+}
 
 interface CLACache {
 	[username: string]: {
@@ -134,7 +134,7 @@ export async function createPDF({
 	// 	color: rgb(1, 0, 0)
 	// });
 
-	await drawImage(80, 188, 'utils/JoshSignature.png');
+	await drawImage(80, 188, join(__dirname, 'JoshSignature.png'));
 	drawText(80, 248, 'Joshua Lambert');
 	drawText(80, 306, 'Board Chairman');
 	drawText(80, 364, 'TiDev, Inc.');
@@ -169,21 +169,17 @@ export async function createPDF({
 	try {
 		await writeFile(unsignedFile, unsignedBytes);
 
-		await OpenPdfSign.sign(
-			`-i ${unsignedFile}`,
-			`-o ${signedFile}`,
-			`-k ${resolve('../certs/tidev.io.key')}`,
-			`-c ${resolve('../certs/tidev.io.crt')}`,
-			'--no-hint',
-			'--baseline-lt',
-			'--timestamp',
-			'--tsa http://timestamp.digicert.com',
-			'--page -1',
-			`--image ${signatureFile}`,
-			'--top 22.5',
-			'--left 3.5',
-			'--width 14'
-		);
+		await signPDF({
+			unsignedFile,
+			signedFile,
+			keyFile: join(certsDir, 'tidev.io.key'),
+			certFile: join(certsDir, 'tidev.io.crt'),
+			signatureFile,
+			page: '-1',
+			top: '22.5',
+			left: '3.5',
+			width: '14'
+		});
 	} finally {
 		await unlink(unsignedFile);
 	}

@@ -25,7 +25,7 @@ export default async function BlogPost({ params }: BlogParams) {
 		};
 	}
 
-	const { content, data = {} } = page;
+	const { content, data } = page;
 
     return (
         <>

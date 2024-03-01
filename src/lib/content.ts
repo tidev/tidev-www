@@ -46,7 +46,10 @@ export async function loadContent(type: string, slug: string): Promise<Page | un
 	for (const file of files) {
         const { name } = path.parse(file);
         if (name === slug) {
-            const { content, data } = matter(fs.readFileSync(file, 'utf-8'));
+            const {
+				content,
+				data = {}
+			} = matter(fs.readFileSync(file, 'utf-8'));
 
 			const html = md({
 				html: true,
@@ -56,7 +59,7 @@ export async function loadContent(type: string, slug: string): Promise<Page | un
 			return {
 				content: html,
 				data
-			};
+			} as Page;
         }
     }
 }
