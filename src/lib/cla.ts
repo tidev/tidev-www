@@ -12,14 +12,14 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 export const claDir = resolve(__dirname, '../../cla');
 export const certsDir = resolve(__dirname, '../../certs');
 
-interface CLACache {
-	[username: string]: {
-		info: CLAInfo;
-		ts: number;
-	}
-}
+// interface CLACache {
+// 	[username: string]: {
+// 		info: CLAInfo;
+// 		ts: number;
+// 	}
+// }
 
-const cache: CLACache = {};
+// const cache: CLACache = {};
 
 export async function getSignedCLAPath(username: string): Promise<string | null> {
 	username = username.trim().toLowerCase();
@@ -30,18 +30,18 @@ export async function getSignedCLAPath(username: string): Promise<string | null>
 export async function checkCLA(username: string): Promise<CLAInfo | null> {
 	username = username.trim().toLowerCase();
 
-	if (cache[username] && cache[username].ts < (Date.now() + 5 * 60 * 1000)) {
-		return cache[username].info;
-	}
+	// if (cache[username] && cache[username].ts < (Date.now() + 5 * 60 * 1000)) {
+	// 	return cache[username].info;
+	// }
 
 	try {
 		const jsonFile = join(claDir, username[0], `${username}.json`);
 		const info: CLAInfo = await fs.readJSON(jsonFile);
 
-		cache[username] = {
-			info,
-			ts: Date.now()
-		}
+		// cache[username] = {
+		// 	info,
+		// 	ts: Date.now()
+		// }
 
 		return info;
 	} catch {
