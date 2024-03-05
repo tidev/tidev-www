@@ -96,7 +96,7 @@ export default function SignatureModal({
 				loadedSigRef.current = true;
 			}
 		}
-	}, [activeTab, sigCanvasRef]);
+	}, [activeTab, sig, sigCanvasRef]);
 
 	return (
 		<>

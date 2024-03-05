@@ -104,7 +104,7 @@ export default function PDFSignaturePage({ onSign, page, pageIdx, pdfDoc, user }
 			drawPdf(pageRef, canvasRef, renderTaskRef);
 			scaleForm();
 		})();
-	}, [canvasRef, pageRef, pdfDoc, user]);
+	}, [canvasRef, pageIdx, pageRef, pdfDoc, user]);
 
 	useEffect(() => {
 		window.addEventListener('resize', scaleForm);

@@ -18,7 +18,7 @@ const config: Config = {
           '800': '#23272B'
         }
       },
-      typography: ({ theme }) => ({
+      typography: ({ theme }: any) => ({
         DEFAULT: {
           css: {
             '--tw-prose-headings': theme('colors.white'),
