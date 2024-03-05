@@ -9,7 +9,11 @@
 }
 
 .prose h1 {
-    text-align: center;
+    @apply text-gray-600 dark:text-gray-200 text-center;
+}
+
+.prose h2, .prose strong {
+    @apply text-gray-600 dark:text-gray-200;
 }
 
 html,
@@ -31,11 +35,11 @@ li a,
 p a,
 strong,
 code {
-    color: #eee;
+    @apply text-gray-900 dark:text-gray-200;
 }
 
 h2 {
-    @apply mb-5 text-4xl font-black md:text-4xl text-gray-200 dark:text-gray-200;
+    @apply mb-5 text-4xl font-black md:text-4xl text-gray-600 dark:text-gray-200;
 }
 
 p a {
