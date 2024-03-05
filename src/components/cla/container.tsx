@@ -16,7 +16,7 @@ export default function CLAContainer() {
 	const user = !SIMULATE_NOT_AUTHENTICATED && status === 'authenticated' && session?.user ? session.user as ExtendedProfile : null;
 
 	useEffect(() => {
-		fetch('/api/cla')
+		fetch('/api/cla/check')
 			.then(res => res.json())
 			.then((data: CLASignedInfo) => {
 				if (!SIMULATE_NOT_SIGNED) {
