@@ -51,8 +51,18 @@ p strong {
     color: inherit;
 }
 
-.logo {
-    content: url('/tidev-logo-dark.png');
+
+.logo-dark {
+    display: none;
+}
+
+@media (prefers-color-scheme: dark) {
+    .logo-light {
+        display: none;
+    }
+    .logo-dark {
+        display: unset;
+    }
 }
 
 .button {

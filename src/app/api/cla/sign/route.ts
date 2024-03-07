@@ -1,9 +1,9 @@
 import { authOptions } from '@/lib/auth';
 import { CLA_VERISON } from '@/lib/cla-constants';
 import { claDir, createPDF, CreatePDFData } from '@/lib/cla';
-import { join } from 'node:path';
+import { dirname, join } from 'node:path';
 import { existsSync } from 'node:fs';
-import { copyFile, unlink, writeFile } from 'node:fs/promises';
+import { copyFile, mkdir, unlink, writeFile } from 'node:fs/promises';
 import { getServerSession } from 'next-auth/next';
 import type { ExtendedProfile } from '@/lib/auth';
 import { tmpdir } from 'node:os';
@@ -57,6 +57,7 @@ export async function POST(req: Request) {
 		}
 
 		const pdfFile = await createPDF(data);
+		await mkdir(dirname(destPdf), { recursive: true });
 		await copyFile(pdfFile, destPdf);
 		await unlink(pdfFile);
 
