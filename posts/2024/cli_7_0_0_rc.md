@@ -6,6 +6,8 @@ author: 'Chris Barber'
 teaser: 'Titanium CLI version 7 is almost here!'
 ---
 
+![Titanium CLI v7.0.0-rc](/images/cli-7.0.0-rc.png)
+
 Titanium CLI version 7 is almost here! It's been almost 2 years since the last major version and the CLI is overdue for a little ❤️.
 
 This Release Candidate includes several breaking changes and improvements, but most importantly updates the code so that we can update the Node.js code and dependencies in the SDK.
