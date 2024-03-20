@@ -24,7 +24,7 @@ export async function POST(req: Request) {
 			throw new Error('No multipart');
 		}
 
-		const { username } = user;
+		const username = user.username.trim().toLowerCase();
 		const isDev = process.env.NODE_ENV === 'development';
 		const destFilename = `${username[0]}/${username}${isDev ? '.test' : ''}`;
 		const destJson = join(claDir, `${destFilename}.json`);
