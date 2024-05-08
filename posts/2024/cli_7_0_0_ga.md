@@ -1,16 +1,18 @@
 ---
-title: 'Titanium CLI 7.0.0.RC released'
-date: '2024-03-06'
-category: 'RC'
+title: 'Titanium CLI 7.0.0 GA released'
+date: '2024-05-10'
+category: 'Release'
 author: 'Chris Barber'
-teaser: 'Titanium CLI version 7 is almost here!'
+teaser: 'Refactor, '
 ---
 
-![Titanium CLI v7.0.0-rc](/images/cli-7.0.0-rc.png)
+![Titanium CLI v7.0.0](/images/cli-7.0.0.png)
 
-Titanium CLI version 7 is almost here! It's been almost 2 years since the last major version and the CLI is overdue for a little ❤️.
+Titanium CLI 7 is finally here! This release is a complete refactor that includes several breaking changes and improvements.
 
-This Release Candidate includes several breaking changes and improvements, but most importantly updates the code so that we can update the Node.js code and dependencies in the SDK.
+Version 7 adopts the ESM module format allowing dependencies to be updated to their latest versions. Equally important, this enables us to finally update the Node.js code in the SDK including the build command logic.
+
+Titanium CLI 7 now requires Node.js 18 or newer.
 
 ## Notable changes:
 
@@ -31,14 +33,14 @@ There have been a number of other improvements:
   * Updated dependencies including replacing outdated dependencies with modern alternatives
   * Lazy load code when possible; when combined with the removed dead code, the CLI in general should be a tiny bit faster
 
-For a complete list of changes, please see the release notes: [Titanium CLI 7.0.0-rc Release Notes](https://github.com/tidev/titanium-cli/releases/tag/v7.0.0-rc).
+For a complete list of changes, please see the release notes: [Titanium CLI 7.0.0 Release Notes](https://github.com/tidev/titanium-cli/releases/tag/v7.0.0).
 
 ## Install
 
-**To install 7.0.0-rc, run:**
+**To install 7.0.0, run:**
 
 ```
-[sudo] npm i -g titanium@next
+[sudo] npm i -g titanium
 ```
 
 ## Report Bugs
