@@ -1,6 +1,6 @@
 ---
 title: 'Titanium CLI 7.0.0.RC released'
-date: '2024-03-06 00:00:00'
+date: '2024-03-06'
 category: 'RC'
 author: 'Chris Barber'
 teaser: 'Titanium CLI version 7 is almost here!'
@@ -14,7 +14,7 @@ This Release Candidate includes several breaking changes and improvements, but m
 
 ## Notable changes:
 
-  * BREAKING: Dropped support for Node.js 18 and older
+  * BREAKING: Dropped support for Node.js 16 and older
   * BREAKING: Removed `login`, `logout`, `plugin`, and `status` commands
   * BREAKING: `ti info` no longer shows `haxm`, `genymotion`, macOS info including Xcode CLI Tools, `jarsigner` tool, or `nodeAppcVer`.
   * BREAKING: `ti module` no longer shows both `iphone` and `ios` modules, only `ios`
