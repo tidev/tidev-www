@@ -22,7 +22,7 @@ export async function GET() {
 			guid: `${SITE_URL}blog/${post.slug}`,
 			url: `${SITE_URL}blog/${post.slug}`,
 			date: post.date,
-			description: post.teaser,
+			description: post.content,
 			author: post.author
 		});
 	}

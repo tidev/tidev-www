@@ -3,7 +3,8 @@ title: 'Titanium CLI 7.0.0 GA released'
 date: '2024-05-10'
 category: 'Release'
 author: 'Chris Barber'
-teaser: 'Refactor, '
+teaser: 'Titanium CLI 7 is finally here!'
+image: https://tidev.io/images/cli-7.0.0.png
 ---
 
 ![Titanium CLI v7.0.0](/images/cli-7.0.0.png)

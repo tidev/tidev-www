@@ -11,7 +11,9 @@ export interface PageMeta {
 	date?: string;
 	slug?: string;
 	teaser: string;
+	content: string;
 	title?: string;
+	image?: string;
 }
 
 export interface Page {
@@ -31,6 +33,10 @@ export async function findContent(type: string): Promise<PageMeta[]> {
 		return {
 			slug,
 			teaser: content.slice(0, 140).replace(/\n/g, ' ') + '...',
+			content: md({
+				html: true,
+				linkify: false
+			}).render(content),
 			...data
 		};
 	});

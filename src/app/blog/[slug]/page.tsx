@@ -12,7 +12,10 @@ export async function generateMetadata({ params }: BlogParams) {
 		const { data } = page;
 		return {
 			title: data.title,
-			description: data.teaser
+			description: data.teaser,
+			openGraph: {
+				images: data.image ? [data.image] : []
+			}
 		};
 	}
 }
