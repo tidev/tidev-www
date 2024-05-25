@@ -18,6 +18,18 @@ Then to release:
 
 	git push dokku main
 
+## Blog Posts
+
+Add your markdown blog post in the `posts/<year>` directory. Every post should
+have an image. You can generate one for free at
+https://socialbu.com/tools/generate-blog-image.
+
+Include the image size in the prompt like this:
+
+```
+black background with futurist terminal vibe 640x320
+```
+
 ## CLA
 
 This site contains the Contributor License Agreement (CLA) form. The PDF is
