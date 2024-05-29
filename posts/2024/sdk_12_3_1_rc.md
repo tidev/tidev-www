@@ -1,0 +1,25 @@
+---
+title: 'Titanium SDK 12.3.1.RC released'
+date: '2024-05-29'
+category: 'Release'
+author: 'Hans Knöchel'
+teaser: 'Several bug fixes related to previous releases'
+---
+
+The next version of the Titanium SDK is now is available: <b>12.3.1.RC</b>. Titanium SDK 12.3.1 is a patch release of the SDK fixing existing bugs from previous releases. For a more detailed overview, known issues and closed issues, see the release notes: [Titanium SDK 12.3.1.RC Release Note](https://titaniumsdk.com/guide/Titanium_SDK/Titanium_SDK_Release_Notes/Titanium_SDK_Release_Notes_12.x/Titanium_SDK_12.3.1.RC_Release_Note.html).
+
+## Install
+
+**Follow these steps to get SDK 12.3.1.RC:**
+
+1. Install the CLI with `[sudo] npm i -g titanium alloy`
+2. Run `titanium sdk install 12.3.1.RC`
+3. Set `<sdk-version>12.3.1.RC</sdk-version>` in your `tiapp.xml`
+
+## Report Bugs
+
+If you run into any issues that seem related to the update, please report them on [GitHub](https://github.com/tidev/titanium-sdk/issues).
+
+## How can I support?
+
+If you like our work and want to support, think about a [donation](/donate) or to [contribute](/contribute) with your time and code.
