@@ -4,7 +4,10 @@ date: '2024-05-30'
 category: 'Release'
 author: 'Hans Knöchel'
 teaser: 'Several bug fixes related to previous releases'
+image: https://tidev.io/images/titanium-general.png
 ---
+
+![Titanium SDK 12.3.1.RC](/images/titanium-general.png)
 
 The next version of the Titanium SDK is now is available: <b>12.3.1.RC</b>. Titanium SDK 12.3.1 is a patch release of the SDK fixing existing bugs from previous releases.
 
