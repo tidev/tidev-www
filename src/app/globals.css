@@ -85,6 +85,10 @@ p strong {
     @apply w-full p-0 md:px-20;
 }
 
+.blog-content li img {
+    @apply w-[initial] p-0 mt-2 mb-5;
+}
+
 .cla-login {
     @apply absolute flex items-center justify-center bg-black bg-opacity-60 rounded-xl;
     bottom: 13%;
