@@ -22,7 +22,22 @@ To opt-in for API level 34, add the following to your tiapp.xml:
     </manifest>
 </android>
 ```
+## Features
 
+Besides the Android API level 34 update we have some other highlights in this release:
+
+* Android/iOS: Swipe actions support for Ti.UI.TableView ([demo video](https://github.com/tidev/titanium-sdk/pull/14065))
+* Android: new moveToBackground() method to move the whole app to the background
+* Android: option to hide scrollbars in a WebView
+* Android: missing Event.remove() method was added
+* Android: parity for OptionBar color properties<br/><img src="/images/12_4_x/12_4_0_4.png"/>
+* Android: change track colors in a Ti.UI.Switch<br/><img src="/images/12_4_x/12_4_0_1.png"/>
+* Android: text alignment for date pickers<br/><img src="/images/12_4_x/12_4_0_3.png"/>
+* Android: change video playback speed
+* Android: defaultLang option in tiapp.xml (in case you run an app that doesn't have EN as the first language)
+* iOS: iOS 17 symbol effects ([demo video](https://github.com/tidev/titanium-sdk/pull/13982))
+* iOS: change the backgroundColor of a RefreshControl<br/><img src="/images/12_4_x/12_4_0_2.png"/>
+* iOS: use overrideUserInterfaceStyle for a Picker
 For a more detailed overview and all changes, see the release notes: [Titanium SDK 12.4.0.GA Release Note](https://titaniumsdk.com/guide/Titanium_SDK/Titanium_SDK_Release_Notes/Titanium_SDK_Release_Notes_12.x/Titanium_SDK_12.4.0.GA_Release_Note.html).
 
 ## Install
