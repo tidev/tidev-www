@@ -9,7 +9,7 @@ image: https://tidev.io/images/titanium-general.png
 
 ![Titanium SDK 12.5.1.GA](/images/titanium-general.png)
 
-The next version of the Titanium SDK is now is available: <b>12.5.1.GA</b>. Titanium SDK 12.5.1 is a  patch release of the SDK, fixing existing bugs from previous releases.
+The next version of the Titanium SDK is now is available: <b>12.5.1.GA</b>. Titanium SDK 12.5.1 is a patch release of the SDK, fixing existing bugs from previous releases.
 
 While the last release (12.5.0.GA) added stable support for iOS 18 and Xcode 16, this release adds additional
 CLI bug fixes and improvements to make it even easier to adapt to the new toolset. In addition, this release
