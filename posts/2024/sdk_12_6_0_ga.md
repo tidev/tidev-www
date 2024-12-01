@@ -16,6 +16,12 @@ This release adds stable support for Gradle 8, allowing to build even more moder
 (aka Material You). In addition, it includes some performance improvements for list views and other features like
 native support for iOS 18+ dark mode app icons.
 
+**Important**: If you are using Android modules that were built with 12.6.0 or later in a project with a Titanium version prior to 12.6.0, you will see the following error:
+```
+Unsupported class file major version 61as the module was build with JAVA_17 and the app is trying to build with JAVA_11
+```
+To resolve this error, simply use 12.6.0+ or recompile it with a lower Titanium SDK version. 
+
 For a more detailed overview and all changes, see the release notes: [Titanium SDK 12.6.0.RC Release Note](https://titaniumsdk.com/guide/Titanium_SDK/Titanium_SDK_Release_Notes/Titanium_SDK_Release_Notes_12.x/Titanium_SDK_12.6.0.RC_Release_Note.html).
 
 ## Install
