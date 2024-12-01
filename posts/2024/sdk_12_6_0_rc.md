@@ -1,6 +1,6 @@
 ---
 title: 'Titanium SDK 12.6.0.RC released'
-date: '2024-11-30'
+date: '2024-12-01'
 category: 'Release'
 author: 'Hans Knöchel'
 teaser: 'Gradle 8 Support'
@@ -9,7 +9,7 @@ image: https://tidev.io/images/titanium-general.png
 
 ![Titanium SDK 12.6.0.RC](/images/titanium-general.png)
 
-The next version of the Titanium SDK is now is available: <b>12.6.0.GA</b>. Titanium SDK 12.6.0 is a minor
+The next version of the Titanium SDK is now is available: <b>12.6.0.RC</b>. Titanium SDK 12.6.0 is a minor
 release of the SDK, adding new features and addressing potential bugs from previous releases.
 
 This release adds stable support for Gradle 8, allowing to build even more modern apps using APIs like Material 3
