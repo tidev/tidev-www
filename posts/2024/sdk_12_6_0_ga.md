@@ -19,7 +19,7 @@ creating and deleting calendar events with up to 150x (!) the speed compared to 
 
 **Important**: If you are using Android modules that were built with 12.6.0 or later in a project with a Titanium version prior to 12.6.0, you will see the following error:
 ```
-Unsupported class file major version 61as the module was build with JAVA_17 and the app is trying to build with JAVA_11
+Unsupported class file major version 61 as the module was build with JAVA_17 and the app is trying to build with JAVA_11
 ```
 To resolve this error, simply use 12.6.0+ or recompile it with a lower Titanium SDK version. 
 
