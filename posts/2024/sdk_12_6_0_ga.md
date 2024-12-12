@@ -15,7 +15,7 @@ release of the SDK, adding new features and addressing potential bugs from previ
 This release adds stable support for Gradle 8, allowing to build even more modern apps using APIs like Material 3
 (aka Material You). In addition, it includes some performance improvements for list views and other features like
 native support for iOS 18+ dark mode app icons. Finally, we have added several new Ti.Calendar APIs to optimize
-creating and deleting calendar events with up to 150x (!) the speed compared to before.ql
+creating and deleting calendar events with up to 150x (!) the speed compared to before.
 
 **Important**: If you are using Android modules that were built with 12.6.0 or later in a project with a Titanium version prior to 12.6.0, you will see the following error:
 ```
