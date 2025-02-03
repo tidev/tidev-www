@@ -4,6 +4,7 @@ WORKDIR /app
 COPY . /app
 
 RUN apk add --no-cache openjdk8 && \
+	npm i -g corepack@latest && \
 	corepack enable && \
 	pnpm install --frozen-lockfile && \
 	pnpm run build
