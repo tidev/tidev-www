@@ -10,7 +10,7 @@ image: https://tidev.io/images/titanium-general.png
 ![Titanium SDK 12.7.0.GA](/images/titanium-general.png)
 
 This version adds several new features to both iOS and Android, including
-more parity APIs like `Tab#popToRootWindow`, `Ti.App.keyboardVisible` and `Label.letterSpacing`.
+more API parity like `Tab#popToRootWindow`, `Ti.App.keyboardVisible` and `Label.letterSpacing`.
 
 In addition, some core Android libraries like Google Play Service have been updated and a rare crash when
 opening a Tab Group on Android 12+13 has been fixed.
