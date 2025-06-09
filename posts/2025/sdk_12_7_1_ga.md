@@ -18,7 +18,7 @@ For a more detailed overview and all changes, see the release notes: [Titanium S
 **Follow these steps to get SDK 12.7.1.GA:**
 
 1. Install the CLI with `[sudo] npm i -g titanium alloy`
-2. Run `titanium sdk install 12.7..GA`
+2. Run `titanium sdk install 12.7.1.GA`
 3. Set `<sdk-version>12.7.1.GA</sdk-version>` in your `tiapp.xml`
 
 ## Report Bugs
