@@ -9,7 +9,8 @@ image: https://tidev.io/images/titanium-general.png
 
 ![Titanium SDK 13.0.0.RC](/images/titanium-general.png)
 
-Titanium SDK 13.0.0 is a major release of the SDK, providing full support for iOS 26 and Xcode 26.
+Titanium SDK 13.0.0 is a major release of the SDK, providing full support for iOS 26 and Xcode 26. It is also compatible with the latest Android 16kb page size requirement by Google and all included first party Android modules support 16kb page size too. Many community modules like the Firebase modules are also already updated.
+If you need help with other modules make sure to join our [Slack group](https://slack.tidev.io/) and ask for support.
 
 To view the full list of changes, see the release notes: [Titanium SDK 13.0.0.RC Release Note](https://titaniumsdk.com/guide/Titanium_SDK/Titanium_SDK_Release_Notes/Titanium_SDK_Release_Notes_13.x/Titanium_SDK_13.0.0.RC_Release_Note.html).
 
