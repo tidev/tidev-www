@@ -24,7 +24,7 @@ Here are some highlights of the release:
 
 Last but not least: We have been able to clock in many additional hours over the last few months to get your apps in the best possible position for the future. While I know what I may repeat myself: If you appreciate our work, a monthly donation via Github helps us to continue to put this level of effort into the SDK! We appreciate it a LOT!
 
-P.S.: We are the first cross platform framework to fully support all these new iOS 26 features - spread it to the world and code strong :slightly_smiling_face: :titanium: 
+P.S.: We are the first cross platform framework to fully support all these new iOS 26 features - spread it to the world and code strong.
 
 To view the full list of changes, see the release notes: [Titanium SDK 13.0.0.GA Release Note](https://titaniumsdk.com/guide/Titanium_SDK/Titanium_SDK_Release_Notes/Titanium_SDK_Release_Notes_13.x/Titanium_SDK_13.0.0.GA_Release_Note.html).
 
