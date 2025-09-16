@@ -7,7 +7,7 @@ teaser: 'Full Support for iOS 26, Xcode 26 and Liquid Glass UI'
 image: https://tidev.io/images/titanium-general.png
 ---
 
-![Titanium SDK 13.0.0.GA](/images/titanium-general.png)
+![Titanium SDK 13.0.0.GA](/images/13_0_x/13_0_0_0.png)
 
 Titanium SDK 13.0.0 is a major release of the SDK, providing full support for iOS 26 and Xcode 26. It is also compatible with the latest Android 16 KB page size requirement by Google and all included first party Android modules support 16kb page size too. Many community modules like the Firebase modules are also already updated. If you need help with other modules make sure to join our [Slack group](https://slack.tidev.io/) and ask for support.
 
