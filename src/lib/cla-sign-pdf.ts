@@ -35,7 +35,7 @@ export default async function signPDF({
 		'-k', keyFile,
 		'-c', certFile,
 		'--no-hint',
-		'--baseline-lt',
+		'--baseline-l', // used to be '--baseline-lt', but removed due to "No revocation data found" errors
 		'--timestamp',
 		'--tsa', 'http://timestamp.digicert.com',
 		'--page', page,
