@@ -10,7 +10,7 @@ image: https://tidev.io/images/titanium-general.png
 ![Titanium SDK 13.1.1.GA](/images/titanium-general.png)
 
 Titanium SDK 13.1.1 is a focused patch release aimed at stabilizing recent changes. It ships with
-high‑priority fixes and officially sunsets support for 13.1.0. On Android, it tightens up stability by
+high‑priority fixes including Node.js 24 support and officially sunsets support for 13.1.0. On Android, it tightens up stability by
 adding null checks around `localOverlayProxy` and corrects Android environment detection in CLI info output.
 On iOS, it resolves Mac Catalyst build failures and App Store distribution issues, and backs
 out a problematic `tabBarItem` reuse change while restoring missing initial values. In short: fewer surprises,
